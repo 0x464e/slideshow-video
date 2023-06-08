@@ -1,0 +1,39 @@
+{
+  "name": "slideshow-video",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "homepage": "https://github.com/0x464e/slideshow-video",
+  "bugs": {
+    "url": "https://github.com/0x464e/slideshow-video/issues"
+  },
+  "author": "0x464e",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "prepare": "tsc"
+  },
+  "devDependencies": {
+    "@tsconfig/node20": "^1.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.59.9",
+    "@typescript-eslint/parser": "^5.59.9",
+    "eslint": "^8.42.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "npmignore": "^0.3.0",
+    "prettier": "^2.8.8",
+    "shx": "^0.3.4",
+    "ts-node": "^10.9.1"
+  },
+  "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "@ffprobe-installer/ffprobe": "^2.0.0",
+    "@types/node": "^20.2.5"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": "github:0x464e/slideshow-video",
+  "private": true
+}
