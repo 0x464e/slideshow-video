@@ -4,7 +4,11 @@ module.exports = {
         es2022: true,
         node: true
     },
-    extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'eslint-config-prettier'],
+    extends: [
+        'eslint:recommended',
+        'plugin:@typescript-eslint/recommended',
+        'eslint-config-prettier'
+    ],
     parser: '@typescript-eslint/parser',
     parserOptions: {
         ecmaVersion: 'latest',
@@ -14,8 +18,14 @@ module.exports = {
     rules: {
         indent: ['error', 4],
         'linebreak-style': ['error', 'unix'],
-        quotes: ['error', 'single'],
-        semi: ['error', 'always'],
-        curly: ['error', 'all']
+        curly: ['error', 'all'],
+        'no-multiple-empty-lines': [
+            'error',
+            {
+                max: 1,
+                maxEOF: 1,
+                maxBOF: 0
+            }
+        ]
     }
 };

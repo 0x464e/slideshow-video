@@ -7,7 +7,7 @@
   },
   "compilerOptions": {
     "lib": [
-      "es2022"
+      "es2023"
     ],
     "module": "Node16",
     "target": "es2022",

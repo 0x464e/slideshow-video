@@ -15,21 +15,32 @@
     "prepare": "tsc"
   },
   "devDependencies": {
-    "@tsconfig/node20": "^1.0.1",
-    "@typescript-eslint/eslint-plugin": "^5.59.9",
-    "@typescript-eslint/parser": "^5.59.9",
-    "eslint": "^8.42.0",
+    "@tsconfig/node20": "^1.0.2",
+    "@types/fluent-ffmpeg": "^2.1.21",
+    "@types/lodash": "^4.14.195",
+    "@typescript-eslint/eslint-plugin": "^5.61.0",
+    "@typescript-eslint/parser": "^5.61.0",
+    "axios": "^1.4.0",
+    "eslint": "^8.44.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
     "npmignore": "^0.3.0",
-    "prettier": "^2.8.8",
+    "prettier": "^3.0.0",
     "shx": "^0.3.4",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
   },
   "dependencies": {
-    "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@ffprobe-installer/ffprobe": "^2.0.0",
-    "@types/node": "^20.2.5"
+    "@types/node": "^20.2.5",
+    "ffmpeg-static": "^5.1.0",
+    "fluent-ffmpeg": "^2.1.2",
+    "image-size": "^1.0.2",
+    "lodash": "^4.17.21",
+    "options-defaults": "^2.0.40",
+    "sharp": "^0.32.1",
+    "split-string": "^6.1.0",
+    "tmp-promise": "^3.0.3"
   },
   "files": [
     "dist"
