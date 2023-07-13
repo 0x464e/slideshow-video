@@ -2,12 +2,11 @@
 // version of ffmpeg with no support for the xfade filter
 import ffmpeg from 'ffmpeg-static';
 import ffprobe from '@ffprobe-installer/ffprobe';
-import { getSlideshowName, splitString } from './util';
-import { execFileAsync, getWorkingDirectory, joinPaths, toBuffer } from './filesystem';
+import { getSlideshowName } from './util';
+import { joinPaths, toBuffer } from './filesystem';
+import fluentFfmpeg from 'fluent-ffmpeg';
 
 export class Ffmpeg {
-    private readonly ffmpegPath: string;
-    private readonly ffprobePath: string;
     private readonly ffmpegCommandBuilder: FfmpegCommandBuilder;
 
     private readonly lastImageExtraDuration: number;
@@ -27,8 +26,8 @@ export class Ffmpeg {
     private ffmpegOutput = '';
 
     constructor(options: SlideshowOptions, tempDir: string) {
-        this.ffmpegPath = options.ffmpegOptions?.ffmpegPath ?? (ffmpeg as string);
-        this.ffprobePath = options.ffmpegOptions?.ffprobePath ?? ffprobe.path;
+        fluentFfmpeg.setFfmpegPath(options.ffmpegOptions?.ffmpegPath ?? (ffmpeg as string));
+        fluentFfmpeg.setFfprobePath(options.ffmpegOptions?.ffprobePath ?? ffprobe.path);
         this.ffmpegCommandBuilder = new FfmpegCommandBuilder(
             options.ffmpegOptions as FfmpegOptions,
             tempDir,
@@ -51,13 +50,15 @@ export class Ffmpeg {
     }
 
     private async getAudioDuration(audio: string): Promise<number> {
-        const audioDurationCommand: string[] = FfmpegCommandBuilder.getAudioDurationCommand(audio);
-        const { stdout: audioDuration } = await execFileAsync(
-            this.ffprobePath,
-            audioDurationCommand
-        );
-
-        return Math.ceil(parseFloat(audioDuration) * 1000);
+        return new Promise((resolve, reject) => {
+            fluentFfmpeg.ffprobe(audio, (err, metadata) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve((metadata.format.duration as number) * 1000);
+                }
+            });
+        });
     }
 
     private calculateTotalImageDuration(images: NonOptional<InputImage>[]): number {
@@ -172,16 +173,18 @@ export class Ffmpeg {
         return Math.ceil((loopedImagesDuration + endOfInputThreshold) / audioDuration);
     }
 
-    public async runFfmpegCommand(ffmpegCommand: string[]): Promise<void> {
-        const promise = execFileAsync(this.ffmpegPath, ffmpegCommand, {
-            cwd: getWorkingDirectory()
+    public async runFfmpegCommand(ffmpegCommand: fluentFfmpeg.FfmpegCommand): Promise<void> {
+        return new Promise((resolve, reject) => {
+            ffmpegCommand
+                .on('end', (stdout, stderr) => {
+                    this.ffmpegOutput = stderr;
+                    resolve();
+                })
+                .on('error', (err, stdout, stderr) => {
+                    reject({ err, stdout, stderr });
+                })
+                .run();
         });
-        const { stderr } = await promise;
-        this.ffmpegOutput = stderr;
-
-        if (promise.child.exitCode) {
-            throw new Error(stderr);
-        }
     }
 
     public async createSlideshow(images: NonOptional<InputImage>[], audio?: string): Promise<void> {
@@ -205,7 +208,7 @@ export class Ffmpeg {
             this.ffmpegCommandBuilder.setAudio(audio, audioLoopCount);
         }
 
-        const ffmpegCommand: string[] = this.ffmpegCommandBuilder.buildSlideshowCommand();
+        const ffmpegCommand = this.ffmpegCommandBuilder.buildSlideshowCommand();
         const asd = this.ffmpegCommandBuilder.getStringSlideshowCommand();
         await this.runFfmpegCommand(ffmpegCommand);
     }
@@ -231,45 +234,23 @@ class FfmpegCommandBuilder {
     private readonly ffmpegOptions: FfmpegOptions;
     private readonly tempDir: string;
     private readonly outputDir?: string;
-    private readonly outputFilename?: string;
+    private readonly outputFilename: string;
+    private readonly ffmpegCommand: fluentFfmpeg.FfmpegCommand;
 
     private images: NonOptional<InputImage>[] = [];
     private totalImageDuration = 0;
     private audio?: string;
     private audioLoopCount?: number;
-    private ffmpegCommand: string[][] = [];
 
     constructor(ffmpegOptions: FfmpegOptions, tempDir: string, outputDir?: string) {
         this.ffmpegOptions = ffmpegOptions;
         this.tempDir = tempDir;
         this.outputDir = outputDir;
-        if (outputDir) {
-            this.outputFilename = joinPaths(
-                this.outputDir ?? this.tempDir,
-                `${getSlideshowName()}.${this.ffmpegOptions.container}`
-            );
-        }
-    }
-
-    static getAudioDurationCommand(audio: string): string[] {
-        return [
-            '-v',
-            'error',
-            '-show_entries',
-            'format=duration',
-            '-of',
-            'default=noprint_wrappers=1:nokey=1',
-            audio
-        ];
-
-        return splitString(
-            `-v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "${audio}"`,
-            false
+        this.outputFilename = joinPaths(
+            this.outputDir ?? this.tempDir,
+            `${getSlideshowName()}.${this.ffmpegOptions.container}`
         );
-    }
-
-    private appendCommand(command: string, keepQuotes = true): void {
-        this.ffmpegCommand.push(splitString(command, keepQuotes));
+        this.ffmpegCommand = fluentFfmpeg({ stdoutLines: 0 });
     }
 
     private generateImageInputs() {
@@ -279,7 +260,9 @@ class FfmpegCommandBuilder {
                 image.duration +
                 image.transitionDuration +
                 (i !== 0 ? this.images[i - 1].transitionDuration : 0);
-            this.appendCommand(`-loop 1 -t ${duration / 1000} -i "${image.filePath}"`, false);
+            this.ffmpegCommand
+                .input(image.filePath)
+                .inputOptions(['-loop', '1', '-t', `${duration / 1000}`]);
         }
     }
 
@@ -288,30 +271,45 @@ class FfmpegCommandBuilder {
             return;
         }
 
-        this.appendCommand(
-            `-stream_loop ${(this.audioLoopCount as number) - 1} -i "${this.audio}"`,
-            false
-        );
+        this.ffmpegCommand
+            .input(this.audio)
+            .inputOptions(['-stream_loop', `${(this.audioLoopCount as number) - 1}`]);
     }
 
     private generateFilters() {
-        this.appendCommand('-filter_complex');
+        const complexFilter: fluentFfmpeg.FilterSpecification[] = [];
 
-        let command = '"';
         for (let i = 0; i < this.images.length; i++) {
-            command += `[${i}]settb=AVTB[img${i + 1}];`;
+            complexFilter.push({
+                filter: 'settb',
+                options: 'AVTB',
+                inputs: i.toString(),
+                outputs: `img${i + 1}`
+            });
         }
 
         const firstImage: NonOptional<InputImage> = this.images[0];
-        command += '[img1][img2]';
         if (firstImage.transition !== 'none') {
-            command += `xfade=transition=${firstImage.transition}:duration=${
-                firstImage.transitionDuration / 1000
-            }:offset=${firstImage.duration / 1000}`;
+            complexFilter.push({
+                filter: 'xfade',
+                options: {
+                    transition: firstImage.transition,
+                    duration: firstImage.transitionDuration / 1000,
+                    offset: firstImage.duration / 1000
+                },
+                inputs: ['img1', 'img2'],
+                outputs: 'filter1'
+            });
         } else {
-            command += 'concat=n=2:v=1:a=0';
+            complexFilter.push({
+                filter: 'concat',
+                options: {
+                    n: this.images.length,
+                    v: 1,
+                    a: 0
+                }
+            });
         }
-        command += '[filter1]';
 
         let offset: number = firstImage.duration + firstImage.transitionDuration;
         for (let i = 2; i < this.images.length; i++) {
@@ -320,76 +318,71 @@ class FfmpegCommandBuilder {
             const transitionDuration: number = image.transitionDuration;
             offset += image.duration;
 
-            command += `;[filter${i - 1}][img${i + 1}]`;
             if (transition === 'none') {
-                command += 'concat=n=2:v=1:a=0';
+                complexFilter.push({
+                    filter: 'concat',
+                    options: {
+                        n: 2,
+                        v: 1,
+                        a: 0
+                    },
+                    inputs: [`filter${i - 1}`, `img${i + 1}`],
+                    outputs: `filter${i}`
+                });
             } else {
-                command += `xfade=transition=${transition}:duration=${
-                    transitionDuration / 1000
-                }:offset=${offset / 1000}`;
+                complexFilter.push({
+                    filter: 'xfade',
+                    options: {
+                        transition: transition,
+                        duration: transitionDuration / 1000,
+                        offset: offset / 1000
+                    },
+                    inputs: [`filter${i - 1}`, `img${i + 1}`],
+                    outputs: `filter${i}`
+                });
             }
-            command += `[filter${i}]`;
-
             offset += transitionDuration;
         }
 
-        this.appendCommand(command, false);
+        this.ffmpegCommand.complexFilter(complexFilter, 'filter' + (this.images.length - 1));
     }
 
     private generateOutput() {
-        this.appendCommand(
-            `-map [filter${this.images.length - 1}]${
-                this.audio ? ` -map ${this.images.length}:a` : ''
-            }`
-        );
+        if (this.audio) {
+            this.ffmpegCommand.outputOptions('-map', `${this.images.length}:a`);
+        }
 
-        let command = '';
-        if (this.ffmpegOptions.customOutputArgs) {
-            this.appendCommand(this.ffmpegOptions.customOutputArgs);
+        if (this.ffmpegOptions.fps) {
+            this.ffmpegCommand.fps(this.ffmpegOptions.fps);
+        }
+
+        this.ffmpegCommand.outputOptions('-pix_fmt', this.ffmpegOptions.pixelFormat as string);
+
+        if (this.ffmpegOptions.videoCodec === 'libx264') {
+            this.ffmpegCommand
+                .videoCodec('libx264')
+                .outputOptions('-preset', this.ffmpegOptions.x264Preset as string);
         } else {
-            if (this.ffmpegOptions.fps) {
-                command += `-r ${this.ffmpegOptions.fps} `;
+            this.ffmpegCommand.videoCodec(this.ffmpegOptions.videoCodec as string);
+        }
+
+        if (this.ffmpegOptions.videoBitrate) {
+            this.ffmpegCommand.videoBitrate(this.ffmpegOptions.videoBitrate);
+        }
+
+        if (this.ffmpegOptions.streamCopyAudio) {
+            this.ffmpegCommand.audioCodec('copy');
+        } else {
+            if (this.ffmpegOptions.audioCodec) {
+                this.ffmpegCommand.audioCodec(this.ffmpegOptions.audioCodec);
             }
-
-            command += `-pix_fmt ${this.ffmpegOptions.pixelFormat} `;
-
-            if (this.ffmpegOptions.videoCodec === 'libx264') {
-                command += `-vcodec libx264 -preset ${this.ffmpegOptions.x264Preset} `;
-            } else {
-                command += `-vcodec ${this.ffmpegOptions.videoCodec} `;
-            }
-
-            if (this.ffmpegOptions.videoBitrate) {
-                command += `-b:v ${this.ffmpegOptions.videoBitrate} `;
-            }
-
-            this.appendCommand(command.trim());
-            command = '';
-
-            if (this.ffmpegOptions.streamCopyAudio) {
-                command += '-c:a copy ';
-            } else {
-                if (this.ffmpegOptions.audioCodec) {
-                    command += `-c:a ${this.ffmpegOptions.audioCodec} `;
-                }
-                if (this.ffmpegOptions.audioBitrate) {
-                    command += `-b:a ${this.ffmpegOptions.audioBitrate} `;
-                }
-            }
-            if (command) {
-                this.appendCommand(command.trim());
+            if (this.ffmpegOptions.audioBitrate) {
+                this.ffmpegCommand.audioBitrate(this.ffmpegOptions.audioBitrate);
             }
         }
 
-        this.appendCommand(`-t ${this.totalImageDuration / 1000}`);
-
-        this.appendCommand(
-            `"${joinPaths(
-                this.outputDir ?? this.tempDir,
-                `${getSlideshowName()}.${this.ffmpegOptions.container}`
-            )}" -y`,
-            false
-        );
+        this.ffmpegCommand.duration(this.totalImageDuration / 1000);
+        this.ffmpegCommand.output(this.outputFilename);
     }
 
     public setImages(images: NonOptional<InputImage>[], totalImageDuration: number): void {
@@ -402,13 +395,12 @@ class FfmpegCommandBuilder {
         this.audioLoopCount = audioLoopCount;
     }
 
-    public buildSlideshowCommand(): string[] {
-        this.ffmpegCommand = [['-benchmark', '-loglevel', 'verbose']];
+    public buildSlideshowCommand(): fluentFfmpeg.FfmpegCommand {
         this.generateImageInputs();
         this.generateAudioInput();
         this.generateFilters();
         this.generateOutput();
-        return this.ffmpegCommand.flat();
+        return this.ffmpegCommand;
     }
 
     public getOutputFilePath(): string | undefined {
@@ -416,27 +408,6 @@ class FfmpegCommandBuilder {
     }
 
     public getStringSlideshowCommand(): string {
-        let command = 'ffmpeg -loglevel verbose \\\n';
-        const filterCommandIndex: number =
-            this.ffmpegCommand.findIndex((x) => x.includes('-filter_complex')) + 1;
-
-        for (let i = 1; i < this.ffmpegCommand.length; i++) {
-            if (i === filterCommandIndex) {
-                command += '"';
-                const filterCommand: string = this.ffmpegCommand[i][0];
-                const filters = filterCommand.split(';').map((x) => x + ';');
-                command += filters
-                    .slice(0, -1)
-                    .map((x) => x + ' \\\n')
-                    .join('');
-                command += `${filters.at(-1)?.slice(0, -1)}" \\\n`;
-                continue;
-            }
-
-            const line: string[] = this.ffmpegCommand[i];
-            command += `${line.join(' ')} \\\n`;
-        }
-
-        return command.slice(0, -3);
+        return this.ffmpegCommand._getArguments().join(' ');
     }
 }
