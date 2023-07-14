@@ -3,7 +3,7 @@
 import ffmpeg from 'ffmpeg-static';
 import ffprobe from '@ffprobe-installer/ffprobe';
 import { getSlideshowName } from './util';
-import { joinPaths, toBuffer } from './filesystem';
+import { joinPaths, saveFile, toBuffer } from './filesystem';
 import fluentFfmpeg from 'fluent-ffmpeg';
 
 export class Ffmpeg {
@@ -208,8 +208,7 @@ export class Ffmpeg {
             this.ffmpegCommandBuilder.setAudio(audio, audioLoopCount);
         }
 
-        const ffmpegCommand = this.ffmpegCommandBuilder.buildSlideshowCommand();
-        const asd = this.ffmpegCommandBuilder.getStringSlideshowCommand();
+        const ffmpegCommand = await this.ffmpegCommandBuilder.buildSlideshowCommand();
         await this.runFfmpegCommand(ffmpegCommand);
     }
 
@@ -241,6 +240,7 @@ class FfmpegCommandBuilder {
     private totalImageDuration = 0;
     private audio?: string;
     private audioLoopCount?: number;
+    private useTransitions = true;
 
     constructor(ffmpegOptions: FfmpegOptions, tempDir: string, outputDir?: string) {
         this.ffmpegOptions = ffmpegOptions;
@@ -253,16 +253,42 @@ class FfmpegCommandBuilder {
         this.ffmpegCommand = fluentFfmpeg({ stdoutLines: 0 });
     }
 
-    private generateImageInputs() {
+    private async generateImageInputs() {
+        if (!this.useTransitions) {
+            const concatString: string = this.images
+                .map(
+                    (x) =>
+                        `file ${x.filePath}\nduration ${(x.duration / 1000).toLocaleString(
+                            'en-US',
+                            { minimumFractionDigits: 2 }
+                        )}`
+                )
+                .join('\n');
+
+            const concatFilePath: string = await saveFile(
+                joinPaths(this.tempDir, 'concat'),
+                concatString
+            );
+
+            this.ffmpegCommand
+                .input(concatFilePath)
+                .inputOptions(['-benchmark', '-loglevel verbose', '-f concat', '-safe 0']);
+
+            return;
+        }
+
         for (let i = 0; i < this.images.length; i++) {
             const image: NonOptional<InputImage> = this.images[i];
             const duration: number =
                 image.duration +
                 image.transitionDuration +
                 (i !== 0 ? this.images[i - 1].transitionDuration : 0);
-            this.ffmpegCommand
-                .input(image.filePath)
-                .inputOptions(['-loop', '1', '-t', `${duration / 1000}`]);
+            this.ffmpegCommand.input(image.filePath);
+            if (i == 0) {
+                // stupid fluent-ffmpeg api, so this is the only place to specify these options
+                this.ffmpegCommand.inputOptions(['-benchmark', '-loglevel verbose']);
+            }
+            this.ffmpegCommand.inputOptions(['-loop', '1', '-t', `${duration / 1000}`]);
         }
     }
 
@@ -277,6 +303,10 @@ class FfmpegCommandBuilder {
     }
 
     private generateFilters() {
+        if (!this.useTransitions) {
+            return;
+        }
+
         const complexFilter: fluentFfmpeg.FilterSpecification[] = [];
 
         for (let i = 0; i < this.images.length; i++) {
@@ -348,7 +378,7 @@ class FfmpegCommandBuilder {
     }
 
     private generateOutput() {
-        if (this.audio) {
+        if (this.audio && this.useTransitions) {
             this.ffmpegCommand.outputOptions('-map', `${this.images.length}:a`);
         }
 
@@ -388,6 +418,7 @@ class FfmpegCommandBuilder {
     public setImages(images: NonOptional<InputImage>[], totalImageDuration: number): void {
         this.images = images;
         this.totalImageDuration = totalImageDuration;
+        this.useTransitions = images.some((x: NonOptional<InputImage>) => x.transition !== 'none');
     }
 
     public setAudio(audio: string, audioLoopCount: number): void {
@@ -395,8 +426,8 @@ class FfmpegCommandBuilder {
         this.audioLoopCount = audioLoopCount;
     }
 
-    public buildSlideshowCommand(): fluentFfmpeg.FfmpegCommand {
-        this.generateImageInputs();
+    public async buildSlideshowCommand(): Promise<fluentFfmpeg.FfmpegCommand> {
+        await this.generateImageInputs();
         this.generateAudioInput();
         this.generateFilters();
         this.generateOutput();

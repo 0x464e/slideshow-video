@@ -42,8 +42,8 @@ export const getTempDir = async (): Promise<DirectoryResult> => {
     });
 };
 
-const saveFile = async (path: string, buffer: Buffer): Promise<string> =>
-    fs.writeFile(path, buffer).then(() => path);
+export const saveFile = async (path: string, data: Buffer | string): Promise<string> =>
+    fs.writeFile(path, data).then(() => path);
 
 const copyFile = async (path: string, newPath: string): Promise<string> =>
     fs.copyFile(path, newPath).then(() => newPath);
