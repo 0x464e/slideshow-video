@@ -59,19 +59,19 @@ export const saveSlideshowImages = async (
 
     const zipped = _.zipObject(fileNames, images);
     return Promise.all(
-        _.map(zipped, (buffer, fileName) => saveFile(`${joinPaths(folderPath, fileName)}`, buffer))
+        _.map(zipped, (buffer, fileName) => saveFile(joinPaths(folderPath, fileName), buffer))
     );
 };
 
 export const saveAudio = async (folderPath: string, audio: string | Buffer): Promise<string> => {
     const fileName = 'audio';
     return audio instanceof Buffer
-        ? saveFile(`${folderPath}/${fileName}`, audio)
-        : copyFile(audio, `${folderPath}/${fileName}`);
+        ? saveFile(joinPaths(folderPath, fileName), audio)
+        : copyFile(audio, joinPaths(folderPath, fileName));
 };
 
 export const execFileAsync = util.promisify(execFile);
 
 export const joinPaths = (...paths: string[]): string => path.join(...paths);
 
-export const getWorkingDirectory = (): string => process.cwd();
+export const escapePath = (path: string): string => path.replace(/\\/g, '\\\\');

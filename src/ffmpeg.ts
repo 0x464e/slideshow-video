@@ -3,7 +3,7 @@
 import ffmpeg from 'ffmpeg-static';
 import ffprobe from '@ffprobe-installer/ffprobe';
 import { getSlideshowName } from './util';
-import { joinPaths, saveFile, toBuffer } from './filesystem';
+import { escapePath, joinPaths, saveFile, toBuffer } from './filesystem';
 import fluentFfmpeg from 'fluent-ffmpeg';
 
 export class Ffmpeg {
@@ -256,10 +256,9 @@ class FfmpegCommandBuilder {
             const concatString: string = this.images
                 .map(
                     (x) =>
-                        `file ${x.filePath}\nduration ${(x.duration / 1000).toLocaleString(
-                            'en-US',
-                            { minimumFractionDigits: 2 }
-                        )}`
+                        `file ${escapePath(x.filePath)}\nduration ${(
+                            x.duration / 1000
+                        ).toLocaleString('en-US', { minimumFractionDigits: 2 })}`
                 )
                 .join('\n');
 
