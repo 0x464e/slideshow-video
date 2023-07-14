@@ -380,32 +380,36 @@ class FfmpegCommandBuilder {
             this.ffmpegCommand.outputOptions('-map', `${this.images.length}:a`);
         }
 
-        if (this.ffmpegOptions.fps) {
-            this.ffmpegCommand.fps(this.ffmpegOptions.fps);
-        }
-
-        this.ffmpegCommand.outputOptions('-pix_fmt', this.ffmpegOptions.pixelFormat as string);
-
-        if (this.ffmpegOptions.videoCodec === 'libx264') {
-            this.ffmpegCommand
-                .videoCodec('libx264')
-                .outputOptions('-preset', this.ffmpegOptions.x264Preset as string);
+        if (this.ffmpegOptions.customOutputArgs) {
+            this.ffmpegCommand.outputOptions(this.ffmpegOptions.customOutputArgs);
         } else {
-            this.ffmpegCommand.videoCodec(this.ffmpegOptions.videoCodec as string);
-        }
-
-        if (this.ffmpegOptions.videoBitrate) {
-            this.ffmpegCommand.videoBitrate(this.ffmpegOptions.videoBitrate);
-        }
-
-        if (this.ffmpegOptions.streamCopyAudio) {
-            this.ffmpegCommand.audioCodec('copy');
-        } else {
-            if (this.ffmpegOptions.audioCodec) {
-                this.ffmpegCommand.audioCodec(this.ffmpegOptions.audioCodec);
+            if (this.ffmpegOptions.fps) {
+                this.ffmpegCommand.fps(this.ffmpegOptions.fps);
             }
-            if (this.ffmpegOptions.audioBitrate) {
-                this.ffmpegCommand.audioBitrate(this.ffmpegOptions.audioBitrate);
+
+            this.ffmpegCommand.outputOptions('-pix_fmt', this.ffmpegOptions.pixelFormat as string);
+
+            if (this.ffmpegOptions.videoCodec === 'libx264') {
+                this.ffmpegCommand
+                    .videoCodec('libx264')
+                    .outputOptions('-preset', this.ffmpegOptions.x264Preset as string);
+            } else {
+                this.ffmpegCommand.videoCodec(this.ffmpegOptions.videoCodec as string);
+            }
+
+            if (this.ffmpegOptions.videoBitrate) {
+                this.ffmpegCommand.videoBitrate(this.ffmpegOptions.videoBitrate);
+            }
+
+            if (this.ffmpegOptions.streamCopyAudio) {
+                this.ffmpegCommand.audioCodec('copy');
+            } else {
+                if (this.ffmpegOptions.audioCodec) {
+                    this.ffmpegCommand.audioCodec(this.ffmpegOptions.audioCodec);
+                }
+                if (this.ffmpegOptions.audioBitrate) {
+                    this.ffmpegCommand.audioBitrate(this.ffmpegOptions.audioBitrate);
+                }
             }
         }
 

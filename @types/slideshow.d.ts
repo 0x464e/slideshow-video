@@ -256,12 +256,24 @@ interface FfmpegOptions {
     streamCopyAudio?: boolean;
     /**
      * Advanced:<br>
-     * Provide custom output arguments to ffmpeg which will override every other option
-     * specified here.<br>
+     * Provide custom output arguments to ffmpeg which will override all default options,
+     * except video and audio stream mappings and total duration.<br>
+     * Specify in format suitable for the fluent-ffmpeg outputOptions api.<br>
      * See the documentation for an in-depth explanation with examples.<br>
      * Default: `none`
+     * @example
+     * ```js
+     * customOutputArgs: [
+     *    '-crf 20',
+     *    '-preset veryfast',
+     *    '-profile:v baseline',
+     *    '-level 3.0',
+     *    '-pix_fmt yuv420p'
+     *    '-movflags +faststart'
+     * ]
+     * ```
      */
-    customOutputArgs?: string;
+    customOutputArgs?: string[];
 }
 
 interface OutputOptions {
