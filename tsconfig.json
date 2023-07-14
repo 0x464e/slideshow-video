@@ -16,11 +16,16 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
-    "outDir": "dist"
+    "outDir": "dist",
+    "declaration": true,
+    "typeRoots": [
+      "node_modules/@types",
+      "@types"
+    ]
   },
   "include": [
     "src",
-    "types"
+    "@types"
   ],
   "exclude": [
     "node_modules"
