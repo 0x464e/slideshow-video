@@ -48,7 +48,7 @@ interface LoopingOptions {
      */
     loopAudio?: 'never' | 'auto';
     /**
-     * Number of images (or `all`) that need to fit inside a second loop for a loop to be created.
+     * Number of images (or `all`) that need to fit inside a loop for a loop to be created.
      * Fitting is considered through the audio duration, the image durations (including
      * transition durations) and end of input threshold.<br>
      * See the documentation for a detailed explanation with examples.<br>
@@ -56,7 +56,7 @@ interface LoopingOptions {
      */
     imageLoopThreshold?: number | 'all';
     /**
-     * Number of milliseconds (or `all`) that need to fit inside a second loop for a loop to be
+     * Number of milliseconds (or `all`) that need to fit inside a loop for a loop to be
      * created.
      * Fitting is considered through the audio duration, the image durations (including
      * transition durations) and end of input threshold.<br>
@@ -130,6 +130,7 @@ declare type TransitionType =
 interface TransitionOptions {
     /**
      * Whether to use transitions between images.<br>
+     * Note: increases memory and CPU usage drastically.<br>
      * Default: `true`
      */
     useTransitions?: boolean;

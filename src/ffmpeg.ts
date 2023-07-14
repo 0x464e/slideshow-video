@@ -78,12 +78,13 @@ export class Ffmpeg {
         audioDuration: number,
         endOfInputThreshold: number
     ) {
-        const dividend: number = audioDuration + endOfInputThreshold - totalImageDuration;
-        const divisor: number = totalImageDuration + this.defaultTransitionDuration;
+        const totalLeftoverDuration: number =
+            audioDuration + endOfInputThreshold - totalImageDuration;
+        const singleLoopDuration: number =
+            totalImageDuration + (this.useTransitions ? this.defaultTransitionDuration : 0);
         return {
-            //TODO: verify if ceil needed
-            fullLoopCount: Math.floor(dividend / divisor),
-            leftoverDuration: dividend % divisor
+            fullLoopCount: Math.floor(totalLeftoverDuration / singleLoopDuration),
+            leftoverDuration: totalLeftoverDuration % singleLoopDuration
         };
     }
 
@@ -93,12 +94,11 @@ export class Ffmpeg {
     ) {
         const outputImages: NonOptional<InputImage>[] = [];
         for (const image of images) {
-            outputImages.push(image);
-
             if (image.duration >= leftoverDuration) {
                 break;
             }
 
+            outputImages.push(image);
             leftoverDuration -= image.duration + image.transitionDuration;
         }
 
@@ -125,25 +125,23 @@ export class Ffmpeg {
             endOfInputThreshold
         );
 
-        const imageLoopThresholdDuration =
-            this.imageLoopThreshold === 'all' || this.imageLoopThreshold >= images.length
-                ? totalImageDuration
-                : this.calculateTotalImageDuration(images.slice(0, this.imageLoopThreshold));
+        const partialLoopImages: NonOptional<InputImage>[] = [];
 
-        if (fullLoopCount === 0 && leftoverDuration < imageLoopThresholdDuration) {
+        if (this.imageLoopThreshold !== 'all' && this.imageLoopThreshold <= images.length) {
+            partialLoopImages.push(...this.fillRemainingAudioDuration(images, leftoverDuration));
+        }
+
+        if (fullLoopCount === 0 && !partialLoopImages.length) {
             return images;
         }
 
-        const partialLoopImages: NonOptional<InputImage>[] = this.fillRemainingAudioDuration(
-            images,
-            leftoverDuration + endOfInputThreshold
-        );
-
-        images[images.length - 1].transition = this.loopTransition;
-        images[images.length - 1].transitionDuration = this.defaultTransitionDuration;
+        if (this.useTransitions) {
+            images[images.length - 1].transition = this.loopTransition;
+            images[images.length - 1].transitionDuration = this.defaultTransitionDuration;
+        }
 
         const loopedImages: NonOptional<InputImage>[] = Array.from(
-            { length: fullLoopCount },
+            { length: fullLoopCount + 1 },
             () => images
         ).flat();
 
