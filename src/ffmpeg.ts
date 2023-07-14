@@ -53,7 +53,7 @@ export class Ffmpeg {
         return new Promise((resolve, reject) => {
             fluentFfmpeg.ffprobe(audio, (err, metadata) => {
                 if (err) {
-                    reject(err);
+                    reject(new Error(`Failed to get audio duration: ${err}`));
                 } else {
                     resolve((metadata.format.duration as number) * 1000);
                 }
@@ -179,7 +179,7 @@ export class Ffmpeg {
                     resolve();
                 })
                 .on('error', (err, stdout, stderr) => {
-                    reject({ err, stdout, stderr });
+                    reject(new Error(err, { cause: stderr }));
                 })
                 .run();
         });

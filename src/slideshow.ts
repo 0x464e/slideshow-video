@@ -28,7 +28,12 @@ export const createSlideshow = async (
     const savedImages: string[] = await saveSlideshowImages(tempDir, paddedImages);
     const savedAudio: string | undefined = audio ? await saveAudio(tempDir, audio) : undefined;
     const ffmpeg = new Ffmpeg(options, tempDir);
-    await ffmpeg.createSlideshow(toInputImages(savedImages, images, options), savedAudio);
+    try {
+        await ffmpeg.createSlideshow(toInputImages(savedImages, images, options), savedAudio);
+    } catch (e) {
+        await cleanup();
+        throw e;
+    }
     const response: Partial<SlideshowResponse> = {};
     if (options.outputOptions?.outputBuffer) {
         response.buffer = (await ffmpeg.getSlideShowBuffer()) as Buffer;
