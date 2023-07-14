@@ -1,6 +1,5 @@
 import { promises as fs } from 'fs';
 import tmp, { DirectoryResult } from 'tmp-promise';
-import { NumberedFileNameGenerator } from './util';
 import * as _ from 'lodash';
 import { execFile } from 'child_process';
 import * as util from 'util';
@@ -52,9 +51,6 @@ export const saveSlideshowImages = async (
     folderPath: string,
     images: Buffer[]
 ): Promise<string[]> => {
-    const fileNameGenerator: NumberedFileNameGenerator = new NumberedFileNameGenerator(
-        images.length
-    );
     const fileNames: number[] = Array.from({ length: images.length }, (_, i) => i + 1);
 
     const zipped = _.zipObject(fileNames, images);

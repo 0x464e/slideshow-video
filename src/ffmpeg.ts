@@ -5,6 +5,7 @@ import ffprobe from '@ffprobe-installer/ffprobe';
 import { getSlideshowName } from './util';
 import { escapePath, joinPaths, saveFile, toBuffer } from './filesystem';
 import fluentFfmpeg from 'fluent-ffmpeg';
+import * as _ from 'lodash';
 
 export class Ffmpeg {
     private readonly ffmpegCommandBuilder: FfmpegCommandBuilder;
@@ -142,7 +143,7 @@ export class Ffmpeg {
 
         const loopedImages: NonOptional<InputImage>[] = Array.from(
             { length: fullLoopCount + 1 },
-            () => images
+            () => _.cloneDeep(images)
         ).flat();
 
         if (!partialLoopImages.length) {

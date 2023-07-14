@@ -2,17 +2,6 @@ import { directoryExists, fileExists, toBuffer, writePermissions } from './files
 import { defaults } from 'options-defaults';
 import split from 'split-string';
 
-export class NumberedFileNameGenerator {
-    private readonly fileCount: number;
-    private fileIndex = 1;
-
-    constructor(fileCount: number) {
-        this.fileCount = fileCount;
-    }
-
-    public nextFileName = (): string => `${this.fileIndex++}`;
-}
-
 export const validateInput = async (
     images: string[] | Buffer[] | InputImage[],
     audio?: string | Buffer,
