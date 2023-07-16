@@ -14,5 +14,11 @@
   },
   "jsDocCompatibility": {
     "exampleTag": false
-  }
+  },
+  "plugin": [
+    "typedoc-plugin-extras"
+  ],
+  "favicon": "assets/slideshow-video-icon.svg",
+  "footerLastModified": true,
+  "customDescription": "Documentation site for npm package slideshow-video, a tool for automatically creating slideshow videos from images. Powered by NodeJS and FFmpeg."
 }
