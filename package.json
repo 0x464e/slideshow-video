@@ -12,7 +12,9 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "ts-node src/index.ts",
-    "prepare": "tsc"
+    "prepare": "tsc",
+    "typedoc-md": "typedoc --plugin typedoc-plugin-markdown --out docs-md src/",
+    "typedoc-md-to-readme": "npm run typedoc-md && node typedoc-md-to-readme.js && shx rm -rf docs-md"
   },
   "devDependencies": {
     "@tsconfig/node20": "^1.0.2",
@@ -28,6 +30,7 @@
     "shx": "^0.3.4",
     "ts-node": "^10.9.1",
     "typedoc": "^0.24.8",
+    "typedoc-plugin-markdown": "^3.15.3",
     "typescript": "^5.1.6"
   },
   "dependencies": {

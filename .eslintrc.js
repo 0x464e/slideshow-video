@@ -27,5 +27,6 @@ module.exports = {
                 maxBOF: 0
             }
         ]
-    }
+    },
+    ignorePatterns: ['**.js']
 };

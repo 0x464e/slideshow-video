@@ -2,11 +2,12 @@
     <img width="150" src="https://raw.githubusercontent.com/0x464e/slideshow-video/master/assets/slideshow-video-icon.svg"  alt='icon'/>
     <h1>slideshow-video</h1>
     <h3>Automated creation of slideshow videos from images</h3>
-    <h4>Powered by NodeJS and ffmpeg</h4>
+    <h4>Powered by NodeJS and FFmpeg</h4>
 </div>
 
 <div align='center'>
 
+[![documentation-page][documentation-page-shield]][documentation-url]
 [![npm-version][npm-version-shield]][npm-url]
 [![npm-downloads][npm-downloads-shield]][npm-url]
 [![HitCount][hit-count-shield]][hit-count-url]
@@ -112,8 +113,29 @@ createSlideshow(imagesWithOptions, audio, options).then(console.log);
 </details>
 
 
+<!-- createSlideshow begin -->
+### createSlideshow
+
+▸ **createSlideshow**(`images`, `audio?`, `options?`): `Promise`<`Partial`<[`SlideshowResponse`](https://0x464e.github.io/slideshow-video/interfaces/SlideshowResponse)\>\>
+
+//TODO: document this
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `images` | `string`[] \| `Buffer`[] \| [`InputImage`](https://0x464e.github.io/slideshow-video/interfaces/InputImage)[] |
+| `audio?` | `string` \| `Buffer` |
+| `options?` | [`SlideshowOptions`](https://0x464e.github.io/slideshow-video/interfaces/SlideshowOptions) |
+
+#### Returns
+
+`Promise`<`Partial`<[`SlideshowResponse`](https://0x464e.github.io/slideshow-video/interfaces/SlideshowResponse)\>\>
+<!-- createSlideshow end -->
 
 <!-- MARKDOWN LINKS & IMAGES -->
+[documentation-page-shield]: https://img.shields.io/badge/documentation-page-blue.svg
+[documentation-url]: https://0x464e.github.io/slideshow-video/
 [npm-version-shield]: https://img.shields.io/npm/v/slideshow-video.svg
 [npm-url]: https://www.npmjs.com/package/slideshow-video
 [npm-downloads-shield]: https://img.shields.io/npm/dt/slideshow-video.svg
