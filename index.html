@@ -1,0 +1,114 @@
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>slideshow-video - v1.0.0</title><meta name="description" content="Documentation for slideshow-video"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script defer src="assets/main.js"></script><script async src="assets/search.js" id="tsd-search-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container">
+<div class="table-cell" id="tsd-search" data-base=".">
+<div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M15.7824 13.833L12.6666 10.7177C12.5259 10.5771 12.3353 10.499 12.1353 10.499H11.6259C12.4884 9.39596 13.001 8.00859 13.001 6.49937C13.001 2.90909 10.0914 0 6.50048 0C2.90959 0 0 2.90909 0 6.49937C0 10.0896 2.90959 12.9987 6.50048 12.9987C8.00996 12.9987 9.39756 12.4863 10.5008 11.6239V12.1332C10.5008 12.3332 10.5789 12.5238 10.7195 12.6644L13.8354 15.7797C14.1292 16.0734 14.6042 16.0734 14.8948 15.7797L15.7793 14.8954C16.0731 14.6017 16.0731 14.1267 15.7824 13.833ZM6.50048 10.499C4.29094 10.499 2.50018 8.71165 2.50018 6.49937C2.50018 4.29021 4.28781 2.49976 6.50048 2.49976C8.71001 2.49976 10.5008 4.28708 10.5008 6.49937C10.5008 8.70852 8.71314 10.499 6.50048 10.499Z" fill="var(--color-text)"></path></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div>
+<div class="field">
+<div id="tsd-toolbar-links"><a href="https://github.com/0x464e/slideshow-video">GitHub</a><a href="https://www.npmjs.com/package/slideshow-video">npm</a></div></div>
+<ul class="results">
+<li class="state loading">Preparing search index...</li>
+<li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">slideshow-video - v1.0.0</a></div>
+<div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="7" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="11" width="14" height="2" fill="var(--color-text)"></rect></svg></a></div></div></header>
+<div class="container container-main">
+<div class="col-content">
+<div class="tsd-page-title">
+<h2>slideshow-video - v1.0.0</h2></div>
+<div class="tsd-panel tsd-typography"><div align='center'>
+    <img width="150" src="https://raw.githubusercontent.com/0x464e/slideshow-video/master/assets/slideshow-video-icon.svg"  alt='icon'/>
+    <h1>slideshow-video</h1>
+    <h3>Automated creation of slideshow videos from images</h3>
+    <h4>Powered by NodeJS and ffmpeg</h4>
+</div>
+
+<div align='center'>
+
+<p><a href="https://www.npmjs.com/package/slideshow-video"><img src="https://img.shields.io/npm/v/slideshow-video.svg" alt="npm-version"></a>
+<a href="https://www.npmjs.com/package/slideshow-video"><img src="https://img.shields.io/npm/dt/slideshow-video.svg" alt="npm-downloads"></a>
+<a href="https://hits.dwyl.com/0x464e/slideshow-video"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fhits.dwyl.com%2F0x464e%2Fslideshow-video.json&color=brightgreen" alt="HitCount"></a></p>
+<p><a href="https://github.com/0x464e/slideshow-video/tree/master/examples">Examples</a> • <a href="https://github.com/0x464e/slideshow-video/issues">Report Bug</a> • <a href="https://github.com/0x464e/slideshow-video/issues">Request Feature</a> • <a href="https://github.com/0x464e/slideshow-video/releases">Releases</a></p>
+</div>
+
+
+<a id="md:about-the-project" class="tsd-anchor"></a><h2><a href="#md:about-the-project">About The Project</a></h2><p>This tool uses ffmpeg to automatically create slideshow videos from images. 
+Cross-platform support is ensured, and it comes bundled with ffmpeg and ffprobe binaries.
+The goal of this tool is to automate the creation of slideshow videos, so you don&#39;t have 
+to manually tailor settings for every run.</p>
+<ul>
+<li>Different image dimensions?</li>
+<li>Different image counts?</li>
+<li>Different audio durations?</li>
+<li>Loop video if audio duration permits?</li>
+<li>Loop audio if image count permits?</li>
+</ul>
+<p><strong>No problem</strong>, configure your settings once and let the tool do the rest.</p>
+<p>The main inspiration for this tool is automated creation of videos from TikTok slideshows. 
+With those you never know how many images there will be, what their dimensions will be, 
+and how long the audio will be, etc. This tool can reliably and automatically create videos from them.</p>
+<a id="md:installation-amp-usage" class="tsd-anchor"></a><h2><a href="#md:installation-amp-usage">Installation &amp; Usage</a></h2><p>Install the package from npm:</p>
+<pre><code class="language-sh"><span class="hl-0">$</span><span class="hl-1"> </span><span class="hl-2">npm</span><span class="hl-1"> </span><span class="hl-2">install</span><span class="hl-1"> </span><span class="hl-2">slideshow-video</span>
+</code><button>Copy</button></pre>
+<p>Then simply use it in your code:<br><sup><sub>(in reality you probably want to await, I just used <code>.then()</code> better compatibility 
+(top level await is a bit iffy to setup))</sup></sub></p>
+<a id="md:basic-example-with-all-default-settings" class="tsd-anchor"></a><h3><a href="#md:basic-example-with-all-default-settings">Basic example with all default settings</a></h3><pre><code class="language-js"><span class="hl-3">import</span><span class="hl-1"> { </span><span class="hl-4">createSlideshow</span><span class="hl-1"> } </span><span class="hl-3">from</span><span class="hl-1"> </span><span class="hl-2">&#39;slideshow-video&#39;</span><span class="hl-1">;</span><br/><span class="hl-5">// or in commonjs</span><br/><span class="hl-5">// const { createSlideshow } = require(&#39;slideshow-video&#39;);</span><br/><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">images</span><span class="hl-1"> = [</span><span class="hl-2">&#39;image1.jpg&#39;</span><span class="hl-1">, </span><span class="hl-2">&#39;image2.jpg&#39;</span><span class="hl-1">, </span><span class="hl-2">&#39;image3.jpg&#39;</span><span class="hl-1">];</span><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">audio</span><span class="hl-1"> = </span><span class="hl-2">&#39;audio.mp3&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-0">createSlideshow</span><span class="hl-1">(</span><span class="hl-4">images</span><span class="hl-1">, </span><span class="hl-4">audio</span><span class="hl-1">).</span><span class="hl-0">then</span><span class="hl-1">(</span><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-4">log</span><span class="hl-1">);</span>
+</code><button>Copy</button></pre>
+<a id="md:advanced-example-with-options" class="tsd-anchor"></a><h3><a href="#md:advanced-example-with-options">Advanced example with options</a></h3><details>
+    <summary>Click to expand</summary>
+Showcase of some of the available options, and ability to pass in image objects with specific options.<br>
+See full documentation for all available options below.
+
+<pre><code class="language-js"><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">options</span><span class="hl-1"> = {</span><br/><span class="hl-1">    </span><span class="hl-4">imageOptions:</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-4">imageDuration:</span><span class="hl-1"> </span><span class="hl-8">5000</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">imageResizeDimensions:</span><span class="hl-1"> { </span><span class="hl-4">width:</span><span class="hl-1"> </span><span class="hl-8">500</span><span class="hl-1"> }</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    </span><span class="hl-4">loopingOptions:</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-4">loopImages:</span><span class="hl-1"> </span><span class="hl-2">&#39;auto&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">imageLoopThreshold:</span><span class="hl-1"> </span><span class="hl-2">&#39;all&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    </span><span class="hl-4">transitionOptions:</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-4">imageTransition:</span><span class="hl-1"> </span><span class="hl-2">&#39;smoothleft&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">loopTransition:</span><span class="hl-1"> </span><span class="hl-2">&#39;fadeslow&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    </span><span class="hl-4">ffmpegOptions:</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-4">showFfmpegOutput:</span><span class="hl-1"> </span><span class="hl-6">false</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">showFfmpegCommand:</span><span class="hl-1"> </span><span class="hl-6">true</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">fps:</span><span class="hl-1"> </span><span class="hl-8">50</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">streamCopyAudio:</span><span class="hl-1"> </span><span class="hl-6">true</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">videoCodec:</span><span class="hl-1"> </span><span class="hl-2">&#39;libx264&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">x264Preset:</span><span class="hl-1"> </span><span class="hl-2">&#39;ultrafast&#39;</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    </span><span class="hl-4">outputOptions:</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-4">outputBuffer:</span><span class="hl-1"> </span><span class="hl-6">false</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">outputDir:</span><span class="hl-1"> </span><span class="hl-2">&#39;../my-out-folder&#39;</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">};</span><br/><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">imagesWithOptions</span><span class="hl-1"> = [</span><br/><span class="hl-1">    {</span><br/><span class="hl-1">        </span><span class="hl-4">filePath:</span><span class="hl-1"> </span><span class="hl-2">&#39;image1.jpg&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">duration:</span><span class="hl-1"> </span><span class="hl-8">1500</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">transitionDuration:</span><span class="hl-1"> </span><span class="hl-8">700</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    {</span><br/><span class="hl-1">        </span><span class="hl-4">buffer:</span><span class="hl-1"> </span><span class="hl-4">Buffer</span><span class="hl-1">.</span><span class="hl-0">from</span><span class="hl-1">(</span><span class="hl-4">something</span><span class="hl-1">),</span><br/><span class="hl-1">        </span><span class="hl-4">transition:</span><span class="hl-1"> </span><span class="hl-2">&#39;circleclose&#39;</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    {</span><br/><span class="hl-1">        </span><span class="hl-4">filePath:</span><span class="hl-1"> </span><span class="hl-2">&#39;image3.jpg&#39;</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">];</span><br/><br/><span class="hl-0">createSlideshow</span><span class="hl-1">(</span><span class="hl-4">imagesWithOptions</span><span class="hl-1">, </span><span class="hl-4">audio</span><span class="hl-1">, </span><span class="hl-4">options</span><span class="hl-1">).</span><span class="hl-0">then</span><span class="hl-1">(</span><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-4">log</span><span class="hl-1">);</span>
+</code><button>Copy</button></pre>
+</details>
+
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+</div></div>
+<div class="col-sidebar">
+<div class="page-menu">
+<div class="tsd-navigation settings">
+<details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)" id="icon-chevronDown"></path></svg>Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility">
+<h4 class="uppercase">Member Visibility</h4><form>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-private" name="private"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Private</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></form></div>
+<div class="tsd-theme-toggle">
+<h4 class="uppercase">Theme</h4><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<details open class="tsd-index-accordion tsd-page-navigation"><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="#icon-chevronDown"></use></svg>On This Page</h3></summary>
+<div class="tsd-accordion-details">
+<ul>
+<li>
+<ul>
+<li><a href="#md:about-the-project"><span>About <wbr/>The <wbr/>Project</span></a></li>
+<li>
+<ul>
+<li><a href="#md:installation-amp-usage"><span>Installation &amp; <wbr/>Usage</span></a></li>
+<li>
+<ul>
+<li><a href="#md:basic-example-with-all-default-settings"><span>Basic example with all default settings</span></a></li>
+<li><a href="#md:advanced-example-with-options"><span>Advanced example with options</span></a></li></ul></li></ul></li></ul></li></ul></div></details></div>
+<div class="site-menu">
+<nav class="tsd-navigation"><a href="modules.html" class="current"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-4"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-namespace)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6"></rect><path d="M9.33 16V7.24H10.77L13.446 14.74C13.43 14.54 13.41 14.296 13.386 14.008C13.37 13.712 13.354 13.404 13.338 13.084C13.33 12.756 13.326 12.448 13.326 12.16V7.24H14.37V16H12.93L10.266 8.5C10.282 8.692 10.298 8.936 10.314 9.232C10.33 9.52 10.342 9.828 10.35 10.156C10.366 10.476 10.374 10.784 10.374 11.08V16H9.33Z" fill="var(--color-text)"></path></g></svg><span>slideshow-<wbr/>video -<wbr/> v1.0.0</span></a>
+<ul class="tsd-small-nested-navigation">
+<li><a href="functions/createSlideshow.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-64"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-function)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6"></rect><path d="M9.39 16V7.24H14.55V8.224H10.446V11.128H14.238V12.112H10.47V16H9.39Z" fill="var(--color-text)"></path></g></svg><span>create<wbr/>Slideshow</span></a></li>
+<li><a href="interfaces/ImageResizeDimensions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-256"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-interface)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6"></rect><path d="M9.51 16V15.016H11.298V8.224H9.51V7.24H14.19V8.224H12.402V15.016H14.19V16H9.51Z" fill="var(--color-text)"></path></g></svg><span>Image<wbr/>Resize<wbr/>Dimensions</span></a></li>
+<li><a href="interfaces/ImageOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>Image<wbr/>Options</span></a></li>
+<li><a href="interfaces/LoopingOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>Looping<wbr/>Options</span></a></li>
+<li><a href="types/TransitionType.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-4194304"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-type-alias)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6"></rect><path d="M11.31 16V8.224H8.91V7.24H14.79V8.224H12.39V16H11.31Z" fill="var(--color-text)"></path></g></svg><span>Transition<wbr/>Type</span></a></li>
+<li><a href="interfaces/TransitionOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>Transition<wbr/>Options</span></a></li>
+<li><a href="types/Container.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Container</span></a></li>
+<li><a href="types/x264Preset.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>x264<wbr/>Preset</span></a></li>
+<li><a href="interfaces/FfmpegOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>Ffmpeg<wbr/>Options</span></a></li>
+<li><a href="interfaces/OutputOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>Output<wbr/>Options</span></a></li>
+<li><a href="interfaces/SlideshowOptions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>Slideshow<wbr/>Options</span></a></li>
+<li><a href="interfaces/InputImage.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>Input<wbr/>Image</span></a></li>
+<li><a href="types/NonOptional.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-4194304"></use></svg><span>Non<wbr/>Optional</span></a></li>
+<li><a href="interfaces/SlideshowResponse.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-256"></use></svg><span>Slideshow<wbr/>Response</span></a></li></ul></nav></div></div></div>
+<div class="tsd-generator">
+<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div>
+<div class="overlay"></div></body></html>
