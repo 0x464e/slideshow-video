@@ -8,13 +8,9 @@
   ],
   "includeVersion": true,
   "darkHighlightTheme": "dark-plus",
-  "titleLink": "https://github.com/0x464e/slideshow-video",
   "navigationLinks": {
     "GitHub": "https://github.com/0x464e/slideshow-video",
     "npm": "https://www.npmjs.com/package/slideshow-video"
-  },
-  "sidebarLinks": {
-    "README": "https://0x464e.github.io/slideshow-video/index.html"
   },
   "jsDocCompatibility": {
     "exampleTag": false
