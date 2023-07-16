@@ -1,5 +1,6 @@
 import imageSize from 'image-size';
 import sharp from 'sharp';
+import { ImageResizeDimensions, NonOptional } from './slideshow';
 
 export const getImageDimensions = (buffers: Buffer[]): SlideshowImageDimensions => {
     const dimensions: SlideshowImageDimensions = {
@@ -36,8 +37,8 @@ export const getImageDimensions = (buffers: Buffer[]): SlideshowImageDimensions 
 const getResizeDimensions = (
     maxWidth: number,
     maxHeight: number,
-    resizeDimensions?: ImageDimensions
-): NonOptional<ImageDimensions> => {
+    resizeDimensions?: ImageResizeDimensions
+): NonOptional<ImageResizeDimensions> => {
     if (!resizeDimensions) {
         return {
             width: maxWidth % 2 === 0 ? maxWidth : maxWidth + 1,
@@ -46,7 +47,7 @@ const getResizeDimensions = (
     }
 
     if (resizeDimensions.width && resizeDimensions.height) {
-        return resizeDimensions as NonOptional<ImageDimensions>;
+        return resizeDimensions as NonOptional<ImageResizeDimensions>;
     }
 
     if (resizeDimensions.width) {
@@ -68,7 +69,7 @@ const getResizeDimensions = (
 
 export const resizeImages = async (
     imageDimensions: SlideshowImageDimensions,
-    resizeDimensions?: ImageDimensions
+    resizeDimensions?: ImageResizeDimensions
 ): Promise<Awaited<Buffer[]>> => {
     const paddedImages: Promise<Buffer>[] = [];
 
@@ -91,3 +92,13 @@ export const resizeImages = async (
 
     return Promise.all(paddedImages);
 };
+
+export interface SlideshowImageDimensions {
+    images: Array<{
+        buffer: Buffer;
+        width: number;
+        height: number;
+    }>;
+    maxWidth: number;
+    maxHeight: number;
+}

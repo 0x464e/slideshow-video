@@ -1,11 +1,20 @@
 // not using @ffmpeg-installer/ffmpeg because it serves a very outdated
 // version of ffmpeg with no support for the xfade filter
-import ffmpeg from 'ffmpeg-static';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore ignore this error because the module is not typed
 import ffprobe from '@ffprobe-installer/ffprobe';
+import ffmpeg from 'ffmpeg-static';
 import { getSlideshowName } from './util';
 import { escapePath, joinPaths, saveFile, toBuffer } from './filesystem';
 import fluentFfmpeg from 'fluent-ffmpeg';
 import * as _ from 'lodash';
+import {
+    FfmpegOptions,
+    InputImage,
+    NonOptional,
+    SlideshowOptions,
+    TransitionType
+} from './slideshow';
 
 export class Ffmpeg {
     private readonly ffmpegCommandBuilder: FfmpegCommandBuilder;
@@ -389,10 +398,10 @@ class FfmpegCommandBuilder {
 
             this.ffmpegCommand.outputOptions('-pix_fmt', this.ffmpegOptions.pixelFormat as string);
 
-            if (this.ffmpegOptions.videoCodec === 'libx264') {
+            if (this.ffmpegOptions.videoCodec === 'libx264' && this.ffmpegOptions.x264Preset) {
                 this.ffmpegCommand
                     .videoCodec('libx264')
-                    .outputOptions('-preset', this.ffmpegOptions.x264Preset as string);
+                    .outputOptions('-preset', this.ffmpegOptions.x264Preset);
             } else {
                 this.ffmpegCommand.videoCodec(this.ffmpegOptions.videoCodec as string);
             }

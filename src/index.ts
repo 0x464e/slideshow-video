@@ -1,1 +1,1 @@
-export { createSlideshow } from './slideshow';
+export * from './slideshow';

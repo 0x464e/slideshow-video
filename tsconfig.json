@@ -9,7 +9,7 @@
     "lib": [
       "es2023"
     ],
-    "module": "Node16",
+    "module": "node16",
     "target": "es2022",
     "strict": true,
     "esModuleInterop": true,
@@ -18,14 +18,10 @@
     "moduleResolution": "node",
     "outDir": "dist",
     "declaration": true,
-    "typeRoots": [
-      "node_modules/@types",
-      "@types"
-    ]
+    "declarationMap": true
   },
   "include": [
-    "src",
-    "@types"
+    "src"
   ],
   "exclude": [
     "node_modules"

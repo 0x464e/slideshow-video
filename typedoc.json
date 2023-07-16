@@ -1,0 +1,18 @@
+{
+  "entryPoints": [
+    "src"
+  ],
+  "out": "./docs",
+  "sort": [
+    "source-order"
+  ],
+  "includeVersion": true,
+  "darkHighlightTheme": "dark-plus",
+  "navigationLinks": {
+    "GitHub": "https://github.com/0x464e/slideshow-video",
+    "npm": "https://www.npmjs.com/package/slideshow-video"
+  },
+  "jsDocCompatibility": {
+    "exampleTag": false
+  }
+}

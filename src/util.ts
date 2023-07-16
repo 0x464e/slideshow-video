@@ -1,6 +1,7 @@
 import { directoryExists, fileExists, toBuffer, writePermissions } from './filesystem';
 import { defaults } from 'options-defaults';
 import split from 'split-string';
+import { InputImage, NonOptional, SlideshowOptions, TransitionType } from './slideshow';
 
 export const validateInput = async (
     images: string[] | Buffer[] | InputImage[],
@@ -64,9 +65,9 @@ export const validateInput = async (
     }
 
     // image dimensions have to be divisible by two
-    if (options?.imageOptions?.imageDimensions) {
-        const width: number | undefined = options.imageOptions.imageDimensions.width;
-        const height: number | undefined = options.imageOptions.imageDimensions.height;
+    if (options?.imageOptions?.imageResizeDimensions) {
+        const width: number | undefined = options.imageOptions.imageResizeDimensions.width;
+        const height: number | undefined = options.imageOptions.imageResizeDimensions.height;
         if (width && width % 2 !== 0) {
             throw new Error(`Image width must be divisible by two: ${width}`);
         }
@@ -131,7 +132,6 @@ export const fillDefaultSlideshowOptions = (
                 container: 'mp4',
                 pixelFormat: 'yuv420p',
                 videoCodec: 'libx264',
-                x264Preset: 'superfast',
                 streamCopyAudio: false
             },
             outputOptions: {
