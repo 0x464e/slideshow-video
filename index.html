@@ -16,12 +16,13 @@
     <img width="150" src="https://raw.githubusercontent.com/0x464e/slideshow-video/master/assets/slideshow-video-icon.svg"  alt='icon'/>
     <h1>slideshow-video</h1>
     <h3>Automated creation of slideshow videos from images</h3>
-    <h4>Powered by NodeJS and ffmpeg</h4>
+    <h4>Powered by NodeJS and FFmpeg</h4>
 </div>
 
 <div align='center'>
 
-<p><a href="https://www.npmjs.com/package/slideshow-video"><img src="https://img.shields.io/npm/v/slideshow-video.svg" alt="npm-version"></a>
+<p><a href="https://0x464e.github.io/slideshow-video/"><img src="https://img.shields.io/badge/documentation-page-blue.svg" alt="documentation-page"></a>
+<a href="https://www.npmjs.com/package/slideshow-video"><img src="https://img.shields.io/npm/v/slideshow-video.svg" alt="npm-version"></a>
 <a href="https://www.npmjs.com/package/slideshow-video"><img src="https://img.shields.io/npm/dt/slideshow-video.svg" alt="npm-downloads"></a>
 <a href="https://hits.dwyl.com/0x464e/slideshow-video"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fhits.dwyl.com%2F0x464e%2Fslideshow-video.json&color=brightgreen" alt="HitCount"></a></p>
 <p><a href="https://github.com/0x464e/slideshow-video/tree/master/examples">Examples</a> • <a href="https://github.com/0x464e/slideshow-video/issues">Report Bug</a> • <a href="https://github.com/0x464e/slideshow-video/issues">Request Feature</a> • <a href="https://github.com/0x464e/slideshow-video/releases">Releases</a></p>
@@ -60,6 +61,31 @@ See full documentation for all available options below.
 </details>
 
 
+<!-- createSlideshow begin -->
+<a id="md:createslideshow" class="tsd-anchor"></a><h3><a href="#md:createslideshow">createSlideshow</a></h3><p>▸ <strong>createSlideshow</strong>(<code>images</code>, <code>audio?</code>, <code>options?</code>): <code>Promise</code>&lt;<code>Partial</code>&lt;<a href="https://0x464e.github.io/slideshow-video/interfaces/SlideshowResponse"><code>SlideshowResponse</code></a>&gt;&gt;</p>
+<p>//TODO: document this</p>
+<a id="md:parameters" class="tsd-anchor"></a><h4><a href="#md:parameters">Parameters</a></h4><table>
+<thead>
+<tr>
+<th align="left">Name</th>
+<th align="left">Type</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>images</code></td>
+<td align="left"><code>string</code>[] | <code>Buffer</code>[] | <a href="https://0x464e.github.io/slideshow-video/interfaces/InputImage"><code>InputImage</code></a>[]</td>
+</tr>
+<tr>
+<td align="left"><code>audio?</code></td>
+<td align="left"><code>string</code> | <code>Buffer</code></td>
+</tr>
+<tr>
+<td align="left"><code>options?</code></td>
+<td align="left"><a href="https://0x464e.github.io/slideshow-video/interfaces/SlideshowOptions"><code>SlideshowOptions</code></a></td>
+</tr>
+</tbody></table>
+<a id="md:returns" class="tsd-anchor"></a><h4><a href="#md:returns">Returns</a></h4><p><code>Promise</code>&lt;<code>Partial</code>&lt;<a href="https://0x464e.github.io/slideshow-video/interfaces/SlideshowResponse"><code>SlideshowResponse</code></a>&gt;&gt;</p>
+<!-- createSlideshow end -->
 
 <!-- MARKDOWN LINKS & IMAGES -->
 </div></div>
@@ -91,7 +117,12 @@ See full documentation for all available options below.
 <li>
 <ul>
 <li><a href="#md:basic-example-with-all-default-settings"><span>Basic example with all default settings</span></a></li>
-<li><a href="#md:advanced-example-with-options"><span>Advanced example with options</span></a></li></ul></li></ul></li></ul></li></ul></div></details></div>
+<li><a href="#md:advanced-example-with-options"><span>Advanced example with options</span></a></li>
+<li><a href="#md:createslideshow"><span>create<wbr/>Slideshow</span></a></li>
+<li>
+<ul>
+<li><a href="#md:parameters"><span>Parameters</span></a></li>
+<li><a href="#md:returns"><span>Returns</span></a></li></ul></li></ul></li></ul></li></ul></li></ul></div></details></div>
 <div class="site-menu">
 <nav class="tsd-navigation"><a href="modules.html" class="current"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-4"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-namespace)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6"></rect><path d="M9.33 16V7.24H10.77L13.446 14.74C13.43 14.54 13.41 14.296 13.386 14.008C13.37 13.712 13.354 13.404 13.338 13.084C13.33 12.756 13.326 12.448 13.326 12.16V7.24H14.37V16H12.93L10.266 8.5C10.282 8.692 10.298 8.936 10.314 9.232C10.33 9.52 10.342 9.828 10.35 10.156C10.366 10.476 10.374 10.784 10.374 11.08V16H9.33Z" fill="var(--color-text)"></path></g></svg><span>slideshow-<wbr/>video -<wbr/> v1.0.0</span></a>
 <ul class="tsd-small-nested-navigation">
