@@ -89,8 +89,8 @@ or per image in <a href="../interfaces/InputImage.html#transitionDuration" class
 <p>Audio duration is simply just the duration of the audio.</p>
 <p><strong>Image Looping</strong></p>
 <p>Image looping is enabled by setting <a href="../interfaces/LoopingOptions.html#loopImages" class="tsd-kind-property">LoopingOptions.loopImages</a> to <code>&quot;auto&quot;</code>.<br>
-It is enabled by default, and means that the images will start looping if duration and
-threshold conditions are met.</p>
+It is set to <code>&quot;never&quot;</code> by default. <code>&quot;auto&quot;</code> means that the images will start looping if duration
+and threshold conditions are met.</p>
 <p>For example:</p>
 <table>
 <thead>
@@ -104,42 +104,42 @@ threshold conditions are met.</p>
 </thead>
 <tbody><tr>
 <td>Duration</td>
-<td align="center">3 s</td>
+<td align="center">3.5 s</td>
 <td align="center">4 sec</td>
-<td align="center">3 sec</td>
+<td align="center">3.5 sec</td>
 <td align="center">21 sec</td>
 </tr>
 <tr>
 <td>Transition</td>
 <td align="center">500 ms</td>
-<td align="center">250 ms</td>
+<td align="center">300 ms</td>
 <td align="center">250 ms (if loop)</td>
 <td align="center">-</td>
 </tr>
 </tbody></table>
-<p>So we have a total image duration of 11.75 sec + 250 ms loop transition (if a loop occurs)<br>
+<p>So we have a total image duration of 11.8 sec + 250 ms loop transition (if a loop occurs)<br>
 And a total audio duration of 21 sec.</p>
-<p>We have no last image extra duration, and a default end of input threshold of 3 sec (last
+<p>We have no last image extra duration, and a default end of input threshold of 3.5 sec (last
 image&#39;s duration).<br>
 And <a href="../interfaces/LoopingOptions.html#imageLoopThreshold" class="tsd-kind-property">LoopingOptions.imageLoopThreshold</a>
 is at its default value <code>&quot;all&quot;</code>.</p>
-<p>After the images have played once, 21 - 11.75 = 9.25 sec of audio is left.</p>
+<p>After the images have played once, 21 - 11.8 = 9.2 sec of audio is left.</p>
 <p>Our imageLoopThreshold is set to <code>&quot;all&quot;</code>, so all images will need to fit inside a loop for
-a loop to occur. We only have 8.25 sec of audio left, and full loop of images will take 12
+a loop to occur. We only have 9.2 sec of audio left, and full loop of images will take 12.05
 sec, so no loop will be created? No, actually a loop will be created due to our end of input
-threshold being 3 sec. This means we are allowed 9.25 + 3 = 12.25 secs for a new loop.</p>
-<p>Ok, new lets say our end of input threshold is set to <code>1000</code> (1 sec) instead. Now we only have
-9.25 + 1 = 10.25 secs for a new loop. And a full loop of images will take 12 sec, so no loop
+threshold being 3.5 sec. This means we are allowed 9.2 + 3.5 = 12.7 secs for a new loop.</p>
+<p>Ok, new lets say our end of input threshold is set to <code>2000</code> (1 sec) instead. Now we only have
+9.2 + 2 = 11.2 secs for a new loop. And a full loop of images will take 12.05 sec, so no loop
 will be created.</p>
 <p>But let&#39;s also change our image loop threshold from <code>&quot;all&quot;</code> to <code>1</code>. This means that only one
-image needs to fit inside a loop for a loop to occur. And our first image is 3 sec long,
+image needs to fit inside a loop for a loop to occur. And our first image is 3.5 sec long,
 so a loop will be created.<br>
-After the first image has looped, we have 10.25 - (3 + 0.25) = 7 secs left. The second image
-is 4 sec long, so it will also be inserted into the loop. Now we have 7 - (4 + 0.5) = 2.5 secs
-left. Inserting the third image would require 3.25 secs, so it will not be inserted into the
+After the first image has looped, we have 11.2 - (3.5 + 0.25) = 7.45 secs left. The second image
+is 4 sec long, so it will also be inserted into the loop. Now we have 7.45 - (4 + 0.5) = 2.95 secs
+left. Inserting the third image would require 3.75 secs, so it will not be inserted into the
 second loop and the second loop, and whole slideshow, ends.</p>
-<p>Now lets say we have a last image extra duration of 3 sec. This means that the last image
-of a loop will be extended by 3 sec. And now we wouldn&#39;t again have space the second image,
+<p>Now lets say we have a last image extra duration of 3 sec. This means that the last image of a
+full loop will be extended by 3 sec. And now we wouldn&#39;t again have space for the second image,
 so the second loop would only contain one image.</p>
 <p><strong>Audio Looping</strong></p>
 <p>Audio looping works in a similar way to image looping, but is a bit simpler. And of course,
@@ -154,7 +154,7 @@ whole audio track needs to fit into a loop for a loop to occur.</p>
 <h4>See</h4><p><a href="../interfaces/SlideshowOptions.html" class="tsd-kind-interface">SlideshowOptions</a> for more information about the options object<br><a href="../interfaces/InputImage.html" class="tsd-kind-interface">InputImage</a> for more information about per image options</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/0x464e/slideshow-video/blob/37ffed9/src/slideshow.ts#L149">slideshow.ts:149</a></li></ul></aside></li></ul></section></div>
+<li>Defined in <a href="https://github.com/0x464e/slideshow-video/blob/96b0ef2/src/slideshow.ts#L149">slideshow.ts:149</a></li></ul></aside></li></ul></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -191,7 +191,7 @@ whole audio track needs to fit into a loop for a loop to occur.</p>
 <p style="line-height: 28px;">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a><br>
             <span id="generation-date"></span>
             <script>
-                window.GENERATION_DATE = 1689623169287;
+                window.GENERATION_DATE = 1689627139982;
 
                 (() => {
                     

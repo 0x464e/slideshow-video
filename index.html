@@ -70,7 +70,7 @@ See <a href="https://0x464e.github.io/slideshow-video/">the documentation</a> fo
 <p>If images are provided as an <a href="https://0x464e.github.io/slideshow-video/interfaces/InputImage">InputImage</a> array, per image options can be specified.
 Per image options override options specified in the 3rd parameter.<br>
 For example:</p>
-<pre><code class="language-ts"><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">images</span><span class="hl-1">: </span><span class="hl-9">InputImage</span><span class="hl-1">[] = [</span><br/><span class="hl-1">    {</span><br/><span class="hl-1">        </span><span class="hl-4">buffer:</span><span class="hl-1"> </span><span class="hl-4">Buffer</span><span class="hl-1">.</span><span class="hl-0">from</span><span class="hl-1">(</span><span class="hl-4">myImage</span><span class="hl-1">),</span><br/><span class="hl-1">        </span><span class="hl-4">duration:</span><span class="hl-1"> </span><span class="hl-8">5000</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    {</span><br/><span class="hl-1">        </span><span class="hl-4">filePath:</span><span class="hl-1"> </span><span class="hl-2">&#39;image2.jpg&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">transition:</span><span class="hl-1"> </span><span class="hl-2">&#39;dissolve&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">transitionDuration:</span><span class="hl-1"> </span><span class="hl-8">200</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    {</span><br/><span class="hl-1">        </span><span class="hl-4">filePath:</span><span class="hl-1"> </span><span class="hl-2">&#39;../../../documents/image3.png&#39;</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">];</span><br/><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">options</span><span class="hl-1">: </span><span class="hl-9">SlideshowOptions</span><span class="hl-1"> = {</span><br/><span class="hl-1">    </span><span class="hl-4">imageOptions:</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-4">imageDuration:</span><span class="hl-1"> </span><span class="hl-8">3500</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    </span><span class="hl-4">transitionOptions:</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-4">transitionDuration:</span><span class="hl-1"> </span><span class="hl-8">500</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">};</span>
+<pre><code class="language-ts"><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">images</span><span class="hl-1">: </span><span class="hl-9">InputImage</span><span class="hl-1">[] = [</span><br/><span class="hl-1">    {</span><br/><span class="hl-1">        </span><span class="hl-4">buffer:</span><span class="hl-1"> </span><span class="hl-4">Buffer</span><span class="hl-1">.</span><span class="hl-0">from</span><span class="hl-1">(</span><span class="hl-4">myImage</span><span class="hl-1">),</span><br/><span class="hl-1">        </span><span class="hl-4">duration:</span><span class="hl-1"> </span><span class="hl-8">5000</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    {</span><br/><span class="hl-1">        </span><span class="hl-4">filePath:</span><span class="hl-1"> </span><span class="hl-2">&#39;image2.jpg&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">transition:</span><span class="hl-1"> </span><span class="hl-2">&#39;dissolve&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">transitionDuration:</span><span class="hl-1"> </span><span class="hl-8">200</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    {</span><br/><span class="hl-1">        </span><span class="hl-4">filePath:</span><span class="hl-1"> </span><span class="hl-2">&#39;../../../documents/image3.png&#39;</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">];</span><br/><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">options</span><span class="hl-1">: </span><span class="hl-9">SlideshowOptions</span><span class="hl-1"> = {</span><br/><span class="hl-1">    </span><span class="hl-4">imageOptions:</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-4">imageDuration:</span><span class="hl-1"> </span><span class="hl-8">3500</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    </span><span class="hl-4">transitionOptions:</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-4">transitionDuration:</span><span class="hl-1"> </span><span class="hl-8">500</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">};</span><br/><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">response</span><span class="hl-1"> = </span><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-0">createSlideshow</span><span class="hl-1">(</span><span class="hl-4">images</span><span class="hl-1">, </span><span class="hl-2">&#39;./music/audio.mp3&#39;</span><span class="hl-1">, </span><span class="hl-4">options</span><span class="hl-1">);</span>
 </code><button>Copy</button></pre>
 <p>The tree input images broken down:</p>
 <p>First image, buffer input, overrides duration</p>
@@ -108,8 +108,8 @@ or per image in <a href="https://0x464e.github.io/slideshow-video/interfaces/Inp
 <p>Audio duration is simply just the duration of the audio.</p>
 <p><strong>Image Looping</strong></p>
 <p>Image looping is enabled by setting <a href="https://0x464e.github.io/slideshow-video/interfaces/LoopingOptions">LoopingOptions.loopImages</a> to <code>&quot;auto&quot;</code>.<br>
-It is enabled by default, and means that the images will start looping if duration and
-threshold conditions are met.</p>
+It is set to <code>&quot;never&quot;</code> by default. <code>&quot;auto&quot;</code> means that the images will start looping if duration
+and threshold conditions are met.</p>
 <p>For example:</p>
 <table>
 <thead>
@@ -123,42 +123,42 @@ threshold conditions are met.</p>
 </thead>
 <tbody><tr>
 <td>Duration</td>
-<td align="center">3 s</td>
+<td align="center">3.5 s</td>
 <td align="center">4 sec</td>
-<td align="center">3 sec</td>
+<td align="center">3.5 sec</td>
 <td align="center">21 sec</td>
 </tr>
 <tr>
 <td>Transition</td>
 <td align="center">500 ms</td>
-<td align="center">250 ms</td>
+<td align="center">300 ms</td>
 <td align="center">250 ms (if loop)</td>
 <td align="center">-</td>
 </tr>
 </tbody></table>
-<p>So we have a total image duration of 11.75 sec + 250 ms loop transition (if a loop occurs)<br>
+<p>So we have a total image duration of 11.8 sec + 250 ms loop transition (if a loop occurs)<br>
 And a total audio duration of 21 sec.</p>
-<p>We have no last image extra duration, and a default end of input threshold of 3 sec (last
+<p>We have no last image extra duration, and a default end of input threshold of 3.5 sec (last
 image&#39;s duration).<br>
 And <a href="https://0x464e.github.io/slideshow-video/interfaces/LoopingOptions">LoopingOptions.imageLoopThreshold</a>
 is at its default value <code>&quot;all&quot;</code>.</p>
-<p>After the images have played once, 21 - 11.75 = 9.25 sec of audio is left.</p>
+<p>After the images have played once, 21 - 11.8 = 9.2 sec of audio is left.</p>
 <p>Our imageLoopThreshold is set to <code>&quot;all&quot;</code>, so all images will need to fit inside a loop for
-a loop to occur. We only have 8.25 sec of audio left, and full loop of images will take 12
+a loop to occur. We only have 9.2 sec of audio left, and full loop of images will take 12.05
 sec, so no loop will be created? No, actually a loop will be created due to our end of input
-threshold being 3 sec. This means we are allowed 9.25 + 3 = 12.25 secs for a new loop.</p>
-<p>Ok, new lets say our end of input threshold is set to <code>1000</code> (1 sec) instead. Now we only have
-9.25 + 1 = 10.25 secs for a new loop. And a full loop of images will take 12 sec, so no loop
+threshold being 3.5 sec. This means we are allowed 9.2 + 3.5 = 12.7 secs for a new loop.</p>
+<p>Ok, new lets say our end of input threshold is set to <code>2000</code> (1 sec) instead. Now we only have
+9.2 + 2 = 11.2 secs for a new loop. And a full loop of images will take 12.05 sec, so no loop
 will be created.</p>
 <p>But let&#39;s also change our image loop threshold from <code>&quot;all&quot;</code> to <code>1</code>. This means that only one
-image needs to fit inside a loop for a loop to occur. And our first image is 3 sec long,
+image needs to fit inside a loop for a loop to occur. And our first image is 3.5 sec long,
 so a loop will be created.<br>
-After the first image has looped, we have 10.25 - (3 + 0.25) = 7 secs left. The second image
-is 4 sec long, so it will also be inserted into the loop. Now we have 7 - (4 + 0.5) = 2.5 secs
-left. Inserting the third image would require 3.25 secs, so it will not be inserted into the
+After the first image has looped, we have 11.2 - (3.5 + 0.25) = 7.45 secs left. The second image
+is 4 sec long, so it will also be inserted into the loop. Now we have 7.45 - (4 + 0.5) = 2.95 secs
+left. Inserting the third image would require 3.75 secs, so it will not be inserted into the
 second loop and the second loop, and whole slideshow, ends.</p>
-<p>Now lets say we have a last image extra duration of 3 sec. This means that the last image
-of a loop will be extended by 3 sec. And now we wouldn&#39;t again have space the second image,
+<p>Now lets say we have a last image extra duration of 3 sec. This means that the last image of a
+full loop will be extended by 3 sec. And now we wouldn&#39;t again have space for the second image,
 so the second loop would only contain one image.</p>
 <p><strong>Audio Looping</strong></p>
 <p>Audio looping works in a similar way to image looping, but is a bit simpler. And of course,
@@ -171,8 +171,6 @@ loop an audio loop to occur. Alternatively it can be set to <code>&quot;all&quot
 whole audio track needs to fit into a loop for a loop to occur.</p>
 <p><strong><code>See</code></strong></p>
 <p><a href="https://0x464e.github.io/slideshow-video/interfaces/SlideshowOptions">SlideshowOptions</a> for more information about the options object<br><a href="https://0x464e.github.io/slideshow-video/interfaces/InputImage">InputImage</a> for more information about per image options</p>
-<p><strong><code>Example</code></strong></p>
-<p>//TODO</p>
 <a id="md:parameters" class="tsd-anchor"></a><h4><a href="#md:parameters">Parameters</a></h4><table>
 <thead>
 <tr>
@@ -260,7 +258,7 @@ By default, only a buffer of the resulting slideshow video is returned.</p>
 <p style="line-height: 28px;">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a><br>
             <span id="generation-date"></span>
             <script>
-                window.GENERATION_DATE = 1689623169274;
+                window.GENERATION_DATE = 1689627139969;
 
                 (() => {
                     
