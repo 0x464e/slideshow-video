@@ -13,7 +13,7 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "prepare": "tsc",
-    "typedoc-md": "typedoc --plugin typedoc-plugin-markdown --out docs-md src/",
+    "typedoc-md": "typedoc --options typedoc-md.json",
     "typedoc-md-to-readme": "npm run typedoc-md && node typedoc-md-to-readme.js && shx rm -rf docs-md"
   },
   "devDependencies": {

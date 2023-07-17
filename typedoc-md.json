@@ -1,0 +1,15 @@
+{
+  "entryPoints": [
+    "src"
+  ],
+  "out": "./docs-md",
+  "sort": [
+    "source-order"
+  ],
+  "jsDocCompatibility": {
+    "exampleTag": false
+  },
+  "plugin": [
+    "typedoc-plugin-markdown"
+  ]
+}

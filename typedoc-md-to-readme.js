@@ -11,7 +11,7 @@ const extractText = (file, start, end) => {
 };
 
 const replaceMdLinks = (text) => {
-    const regex = /\(([^)]+)\.md\)/g;
+    const regex = /\(([\w/]+)\.md(?:#\w*?)?\)/g;
     const link = 'https://0x464e.github.io/slideshow-video/';
     return text.replace(regex, `(${link}$1)`);
 };

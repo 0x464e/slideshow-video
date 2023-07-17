@@ -9,11 +9,142 @@ import {
 import { Ffmpeg } from './ffmpeg';
 
 /**
- * //TODO: document this
- * @param images
- * @param audio
- * @param options
- * @returns
+ * Brains of the operation, entrypoint to this whole package.
+ *
+ * Takes in images, audio, and options from which it automatically creates a slideshow video.
+ *
+ * If images are provided as an {@link InputImage} array, per image options can be specified.
+ * Per image options override options specified in the 3rd parameter.<br>
+ * For example:
+ * ```ts
+ * const images: InputImage[] = [
+ *     {
+ *         buffer: Buffer.from(myImage),
+ *         duration: 5000
+ *     },
+ *     {
+ *         filePath: 'image2.jpg',
+ *         transition: 'dissolve',
+ *         transitionDuration: 200
+ *     },
+ *     {
+ *         filePath: '../../../documents/image3.png'
+ *     }
+ * ];
+ *
+ * const options: SlideshowOptions = {
+ *     imageOptions: {
+ *         imageDuration: 3500
+ *     },
+ *     transitionOptions: {
+ *         transitionDuration: 500
+ *     }
+ * };
+ * ```
+ *
+ * The tree input images broken down:
+ *
+ * First image, buffer input, overrides duration
+ * - Has a duration of 5000ms
+ * - 500ms transition (specified in options object) to the next image
+ * with the default transition (`slideleft`)
+ *
+ * Second image, file path input, overrides transition and transition duration
+ * - Has a duration of 3500ms, specified in the options object
+ * - 200 ms transition to the next image with the `dissolve` transition
+ *
+ * Third image, file path input, uses default options
+ * - Has a duration of 3500ms, specified in the options object
+ * - Will have no normal transition as it's the last image
+ * - Might have a 500ms loop transition (by default `pixelize`),
+ * if image and audio durations permit it
+ * - See remarks section for more about durations and looping
+ *
+ *
+ * <a name="duration-looping"></a>
+ * @remarks
+ * **Duration and looping**
+ *
+ * Possible total duration for one loop of images consist of the following:
+ * - Image duration (set globally in {@link ImageOptions.imageDuration | ImageOptions.imageDuration}
+ * or per image in {@link InputImage.duration | InputImage.duration})
+ * - Transition duration (set globally in {@link TransitionOptions.transitionDuration | TransitionOptions.transitionDuration}
+ * or per image in {@link InputImage.transitionDuration | InputImage.transitionDuration})
+ * - Loop transition duration (also set in {@link TransitionOptions.transitionDuration | TransitionOptions.transitionDuration})
+ * - Last image extra duration (set in {@link ImageOptions.lastImageExtraDuration | ImageOptions.lastImageExtraDuration})
+ * - End of input threshold (set in {@link LoopingOptions.endOfInputThreshold | LoopingOptions.endOfInputThreshold})
+ *
+ * Audio duration is simply just the duration of the audio.
+ *
+ * **Image Looping**
+ *
+ * Image looping is enabled by setting {@link LoopingOptions.loopImages | LoopingOptions.loopImages} to `"auto"`.<br>
+ * It is enabled by default, and means that the images will start looping if duration and
+ * threshold conditions are met.
+ *
+ * For example:
+ *
+ * |            | Image 1 | Image 2 |      Image 3      |  Audio |
+ * |------------|:-------:|:-------:|:-----------------:|:------:|
+ * | Duration   |   3 s   |  4 sec  |       3 sec       | 21 sec |
+ * | Transition |  500 ms |  250 ms |  250 ms (if loop) |    -   |
+ *
+ * So we have a total image duration of 11.75 sec + 250 ms loop transition (if a loop occurs)<br>
+ * And a total audio duration of 21 sec.
+ *
+ * We have no last image extra duration, and a default end of input threshold of 3 sec (last
+ * image's duration).<br>
+ * And {@link LoopingOptions.imageLoopThreshold | LoopingOptions.imageLoopThreshold}
+ * is at its default value `"all"`.
+ *
+ * After the images have played once, 21 - 11.75 = 9.25 sec of audio is left.
+ *
+ * Our imageLoopThreshold is set to `"all"`, so all images will need to fit inside a loop for
+ * a loop to occur. We only have 8.25 sec of audio left, and full loop of images will take 12
+ * sec, so no loop will be created? No, actually a loop will be created due to our end of input
+ * threshold being 3 sec. This means we are allowed 9.25 + 3 = 12.25 secs for a new loop.
+ *
+ * Ok, new lets say our end of input threshold is set to `1000` (1 sec) instead. Now we only have
+ * 9.25 + 1 = 10.25 secs for a new loop. And a full loop of images will take 12 sec, so no loop
+ * will be created.
+ *
+ * But let's also change our image loop threshold from `"all"` to `1`. This means that only one
+ * image needs to fit inside a loop for a loop to occur. And our first image is 3 sec long,
+ * so a loop will be created.<br>
+ * After the first image has looped, we have 10.25 - (3 + 0.25) = 7 secs left. The second image
+ * is 4 sec long, so it will also be inserted into the loop. Now we have 7 - (4 + 0.5) = 2.5 secs
+ * left. Inserting the third image would require 3.25 secs, so it will not be inserted into the
+ * second loop and the second loop, and whole slideshow, ends.
+ *
+ * Now lets say we have a last image extra duration of 3 sec. This means that the last image
+ * of a loop will be extended by 3 sec. And now we wouldn't again have space the second image,
+ * so the second loop would only contain one image.
+ *
+ * **Audio Looping**
+ *
+ * Audio looping works in a similar way to image looping, but is a bit simpler. And of course,
+ * logic is inverted in the sense that we are checking how much video duration time we have left
+ * for a new loop of the audio track. The end of input threshold is also considered, just as it
+ * was for image looping.
+ *
+ * For audio looping, {@link LoopingOptions.audioLoopThreshold | LoopingOptions.audioLoopThreshold},
+ * which default to `0`, exists. It specifies the amount of milliseconds that need to fit into a
+ * loop an audio loop to occur. Alternatively it can be set to `"all"`, which means that the
+ * whole audio track needs to fit into a loop for a loop to occur.
+ *
+ *
+ * @see {@link SlideshowOptions} for more information about the options object\
+ * {@link InputImage} for more information about per image options
+ *
+ * @param images Images to be used in the slideshow.<br>
+ * Either a file path, buffer, or an {@link InputImage}
+ * @param audio Audio to be used in the slideshow.<br>
+ * Either a file path or buffer.<br>
+ * Can be undefined, so the slideshow will have no audio
+ * @param options Options object to configure the slideshow creation
+ * @returns A promise that resolves to a partial {@link SlideshowResponse} object.<br>
+ * Available fields in the response object depend on what was specified in {@link OutputOptions}.<br>
+ * By default, only a buffer of the resulting slideshow video is returned.
  */
 export const createSlideshow = async (
     images: string[] | Buffer[] | InputImage[],
@@ -94,24 +225,27 @@ export interface LoopingOptions {
     /**
      * Looping mode for images.
      * - `never` - no looping
-     * - `auto` - loops images if duration and threshold conditions are met, see the documentation
-     * for a detailed explanation with examples.
+     * - `auto` - loops images if duration and threshold conditions are met
+     * @see [Duration and looping](https://github.com/0x464e/slideshow-video#duration-looping) for
+     * a detailed explanation with examples.
      * @defaultValue `"auto"`
      */
     loopImages?: 'never' | 'auto';
     /**
      * Looping mode for audio.
      * - `never` - no looping
-     * - `auto` - loops audio if duration and threshold conditions are met, see the documentation
-     * for a detailed explanation with examples.
+     * - `auto` - loops audio if duration and threshold conditions are met
+     * @see [Duration and looping](https://github.com/0x464e/slideshow-video#duration-looping) for
+     * a detailed explanation with examples.
      * @defaultValue `"auto"`
      */
     loopAudio?: 'never' | 'auto';
     /**
      * Number of images (or `all`) that need to fit inside a loop for a loop to be created.
      * Fitting is considered through the audio duration, the image durations (including
-     * transition durations) and end of input threshold.\
-     * See the documentation for a detailed explanation with examples.
+     * transition durations) and end of input threshold.
+     * @see [Duration and looping](https://github.com/0x464e/slideshow-video#duration-looping) for
+     * a detailed explanation with examples.
      * @defaultValue `"all"`
      */
     imageLoopThreshold?: number | 'all';
@@ -119,16 +253,18 @@ export interface LoopingOptions {
      * Number of milliseconds (or `all`) that need to fit inside a loop for a loop to be
      * created.\
      * Fitting is considered through the audio duration, the image durations (including
-     * transition durations) and end of input threshold.\
-     * See the documentation for a detailed explanation with examples.
-     * @defaultValue 0
+     * transition durations) and end of input threshold.
+     * @see [Duration and looping](https://github.com/0x464e/slideshow-video#duration-looping) for
+     * a detailed explanation with examples.
+     * @defaultValue `0`
      */
     audioLoopThreshold?: number | 'all';
     /**
      * Number of milliseconds to allow images or audio to go over the end of either input before
      * looping is considered.\
-     * `auto` - the threshold is the last image's duration.\
-     * See the documentation for a detailed explanation with examples.
+     * `auto` - the threshold is the last image's duration.
+     * @see [Duration and looping](https://github.com/0x464e/slideshow-video#duration-looping) for
+     * a detailed explanation with examples.
      * @defaultValue `"auto"`
      */
     endOfInputThreshold?: number | 'auto';
@@ -213,7 +349,8 @@ export interface TransitionOptions {
     loopTransition?: TransitionType;
     /**
      * Base transition duration for images in milliseconds.\
-     * Can be overridden by providing a specific transition duration in the input images array.
+     * Can be overridden by providing a specific transition duration in the input images array.\
+     * Also used for the loop transition duration.
      * @defaultValue 250
      */
     transitionDuration?: number;
@@ -334,12 +471,20 @@ export interface FfmpegOptions {
     /**
      * Advanced:\
      * Provide custom output arguments to ffmpeg which will override all default options,
-     * except video and audio stream mappings and total duration.\
-     * Specify in format suitable for the [fluent-ffmpeg outputOptions api](https://github.com/fluent-ffmpeg/node-fluent-ffmpeg#outputoptionsoption-add-custom-output-options).\
-     * See the documentation for an in-depth explanation with examples.
+     * except video and audio stream mappings and total duration. Output filename will also
+     * be specified for you.\
+     * Specify in format suitable for the [fluent-ffmpeg outputOptions api](https://github.com/fluent-ffmpeg/node-fluent-ffmpeg#outputoptionsoption-add-custom-output-options).
+     *
+     * Think of the ffmpeg command as:
+     * `ffmpeg <inputs> <complexFilter> -map [filterOutput] -map audio:a -t duration <customOutputArgs> outputFilename.format`
+     *
+     * So you will need to specify at the very least the video codec you want to use.\
+     * Also be sure to specify a compatible container via {@link FfmpegOptions.container | FFmpegOptions.container}
+     *
      * @example
      * ```js
      * customOutputArgs: [
+     *    '-c:v libx264',
      *    '-crf 20',
      *    '-preset veryfast',
      *    '-profile:v baseline',
@@ -395,17 +540,17 @@ export interface InputImage {
     filePath?: string;
     /**
      * Duration of this image in milliseconds.\
-     * Overrides {@link ImageOptions.imageDuration}.
+     * Overrides {@link ImageOptions.imageDuration | ImageOptions.imageDuration}.
      */
     duration?: number;
     /**
      * Transition type to use when transitioning to the next image.\
-     * Overrides {@link TransitionOptions.imageTransition}.
+     * Overrides {@link TransitionOptions.imageTransition | TransitionOptions.imageTransition}.
      */
     transition?: TransitionType;
     /**
      * Transition duration after this image in milliseconds.\
-     * Overrides {@link TransitionOptions.transitionDuration}.
+     * Overrides {@link TransitionOptions.transitionDuration | TransitionOptions.transitionDuration}.
      */
     transitionDuration?: number;
 }
@@ -418,22 +563,22 @@ export type NonOptional<T> = { [K in keyof T]-?: T[K] };
 export interface SlideshowResponse {
     /**
      * The resulting slideshow video as a buffer.\
-     * Unspecified if {@link OutputOptions.outputBuffer} is `false`
+     * Unspecified if {@link OutputOptions.outputBuffer | OutputOptions.outputBuffer} is `false`
      */
     buffer: Buffer;
     /**
      * The resulting slideshow video file path.\
-     * Unspecified if {@link OutputOptions.outputDir} is empty
+     * Unspecified if {@link OutputOptions.outputDir | OutputOptions.outputDir} is empty
      */
     filePath: string;
     /**
      * The ffmpeg output of the slideshow creation.\
-     * Unspecified if {@link FfmpegOptions.showFfmpegOutput} is `false`
+     * Unspecified if {@link FfmpegOptions.showFfmpegOutput | FfmpegOptions.showFfmpegOutput} is `false`
      */
     ffmpegOutput: string;
     /**
      * The ffmpeg command used to create the slideshow.\
-     * Unspecified if {@link FfmpegOptions.showFfmpegCommand} is `false`
+     * Unspecified if {@link FfmpegOptions.showFfmpegCommand | FfmpegOptions.showFfmpegCommand} is `false`
      */
     ffmpegCommand: string;
 }
