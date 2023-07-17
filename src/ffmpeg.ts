@@ -88,10 +88,10 @@ export class Ffmpeg {
         audioDuration: number,
         endOfInputThreshold: number
     ) {
+        const loopTransitionTime: number = this.useTransitions ? this.defaultTransitionDuration : 0;
         const totalLeftoverDuration: number =
-            audioDuration + endOfInputThreshold - totalImageDuration;
-        const singleLoopDuration: number =
-            totalImageDuration + (this.useTransitions ? this.defaultTransitionDuration : 0);
+            audioDuration + endOfInputThreshold - (totalImageDuration + loopTransitionTime);
+        const singleLoopDuration: number = totalImageDuration + loopTransitionTime;
         return {
             fullLoopCount: Math.floor(totalLeftoverDuration / singleLoopDuration),
             leftoverDuration: totalLeftoverDuration % singleLoopDuration
