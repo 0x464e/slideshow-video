@@ -20,24 +20,141 @@
 <ul class="tsd-signatures">
 <li class="tsd-signature tsd-anchor-link" id="createSlideshow"><span class="tsd-kind-call-signature">create<wbr/>Slideshow</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">images</span>, <span class="tsd-kind-parameter">audio</span><span class="tsd-signature-symbol">?</span>, <span class="tsd-kind-parameter">options</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/SlideshowResponse.html" class="tsd-signature-type tsd-kind-interface">SlideshowResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><a href="#createSlideshow" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><g stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" id="icon-anchor"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5"></path></g></svg></a></li>
 <li class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>//TODO: document this</p>
+<div class="tsd-comment tsd-typography"><p>Brains of the operation, entrypoint to this whole package.</p>
+<p>Takes in images, audio, and options from which it automatically creates a slideshow video.</p>
+<p>If images are provided as an <a href="../interfaces/InputImage.html" class="tsd-kind-interface">InputImage</a> array, per image options can be specified.
+Per image options override options specified in the 3rd parameter.<br>
+For example:</p>
+<pre><code class="language-ts"><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">images</span><span class="hl-1">: </span><span class="hl-9">InputImage</span><span class="hl-1">[] = [</span><br/><span class="hl-1">    {</span><br/><span class="hl-1">        </span><span class="hl-4">buffer:</span><span class="hl-1"> </span><span class="hl-4">Buffer</span><span class="hl-1">.</span><span class="hl-0">from</span><span class="hl-1">(</span><span class="hl-4">myImage</span><span class="hl-1">),</span><br/><span class="hl-1">        </span><span class="hl-4">duration:</span><span class="hl-1"> </span><span class="hl-8">5000</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    {</span><br/><span class="hl-1">        </span><span class="hl-4">filePath:</span><span class="hl-1"> </span><span class="hl-2">&#39;image2.jpg&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">transition:</span><span class="hl-1"> </span><span class="hl-2">&#39;dissolve&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">transitionDuration:</span><span class="hl-1"> </span><span class="hl-8">200</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    {</span><br/><span class="hl-1">        </span><span class="hl-4">filePath:</span><span class="hl-1"> </span><span class="hl-2">&#39;../../../documents/image3.png&#39;</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">];</span><br/><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">options</span><span class="hl-1">: </span><span class="hl-9">SlideshowOptions</span><span class="hl-1"> = {</span><br/><span class="hl-1">    </span><span class="hl-4">imageOptions:</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-4">imageDuration:</span><span class="hl-1"> </span><span class="hl-8">3500</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    </span><span class="hl-4">transitionOptions:</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-4">transitionDuration:</span><span class="hl-1"> </span><span class="hl-8">500</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">};</span>
+</code><button>Copy</button></pre>
+<p>The tree input images broken down:</p>
+<p>First image, buffer input, overrides duration</p>
+<ul>
+<li>Has a duration of 5000ms</li>
+<li>500ms transition (specified in options object) to the next image
+with the default transition (<code>slideleft</code>)</li>
+</ul>
+<p>Second image, file path input, overrides transition and transition duration</p>
+<ul>
+<li>Has a duration of 3500ms, specified in the options object</li>
+<li>200 ms transition to the next image with the <code>dissolve</code> transition</li>
+</ul>
+<p>Third image, file path input, uses default options</p>
+<ul>
+<li>Has a duration of 3500ms, specified in the options object</li>
+<li>Will have no normal transition as it&#39;s the last image</li>
+<li>Might have a 500ms loop transition (by default <code>pixelize</code>),
+if image and audio durations permit it</li>
+<li>See remarks section for more about durations and looping</li>
+</ul>
+<p><a name="duration-looping"></a></p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
 <h5><span class="tsd-kind-parameter">images</span>: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type ">Buffer</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/InputImage.html" class="tsd-signature-type tsd-kind-interface">InputImage</a><span class="tsd-signature-symbol">[]</span></h5>
+<div class="tsd-comment tsd-typography"><p>Images to be used in the slideshow.<br>
+Either a file path, buffer, or an <a href="../interfaces/InputImage.html" class="tsd-kind-interface">InputImage</a></p>
+</div>
 <div class="tsd-comment tsd-typography"></div></li>
 <li>
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">audio</span>: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type ">Buffer</span></h5>
+<div class="tsd-comment tsd-typography"><p>Audio to be used in the slideshow.<br>
+Either a file path or buffer.<br>
+Can be undefined, so the slideshow will have no audio</p>
+</div>
 <div class="tsd-comment tsd-typography"></div></li>
 <li>
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> <span class="tsd-kind-parameter">options</span>: <a href="../interfaces/SlideshowOptions.html" class="tsd-signature-type tsd-kind-interface">SlideshowOptions</a></h5>
+<div class="tsd-comment tsd-typography"><p>Options object to configure the slideshow creation</p>
+</div>
 <div class="tsd-comment tsd-typography"></div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/SlideshowResponse.html" class="tsd-signature-type tsd-kind-interface">SlideshowResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
-<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type ">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/SlideshowResponse.html" class="tsd-signature-type tsd-kind-interface">SlideshowResponse</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4><p>A promise that resolves to a partial <a href="../interfaces/SlideshowResponse.html" class="tsd-kind-interface">SlideshowResponse</a> object.<br>
+Available fields in the response object depend on what was specified in <a href="../interfaces/OutputOptions.html" class="tsd-kind-interface">OutputOptions</a>.<br>
+By default, only a buffer of the resulting slideshow video is returned.</p>
+
+<div class="tsd-comment tsd-typography">
+<h4>Remarks</h4><p><strong>Duration and looping</strong></p>
+<p>Possible total duration for one loop of images consist of the following:</p>
 <ul>
-<li>Defined in <a href="https://github.com/0x464e/slideshow-video/blob/514f807/src/slideshow.ts#L18">slideshow.ts:18</a></li></ul></aside></li></ul></section></div>
+<li>Image duration (set globally in <a href="../interfaces/ImageOptions.html#imageDuration" class="tsd-kind-property">ImageOptions.imageDuration</a>
+or per image in <a href="../interfaces/InputImage.html#duration" class="tsd-kind-property">InputImage.duration</a>)</li>
+<li>Transition duration (set globally in <a href="../interfaces/TransitionOptions.html#transitionDuration" class="tsd-kind-property">TransitionOptions.transitionDuration</a>
+or per image in <a href="../interfaces/InputImage.html#transitionDuration" class="tsd-kind-property">InputImage.transitionDuration</a>)</li>
+<li>Loop transition duration (also set in <a href="../interfaces/TransitionOptions.html#transitionDuration" class="tsd-kind-property">TransitionOptions.transitionDuration</a>)</li>
+<li>Last image extra duration (set in <a href="../interfaces/ImageOptions.html#lastImageExtraDuration" class="tsd-kind-property">ImageOptions.lastImageExtraDuration</a>)</li>
+<li>End of input threshold (set in <a href="../interfaces/LoopingOptions.html#endOfInputThreshold" class="tsd-kind-property">LoopingOptions.endOfInputThreshold</a>)</li>
+</ul>
+<p>Audio duration is simply just the duration of the audio.</p>
+<p><strong>Image Looping</strong></p>
+<p>Image looping is enabled by setting <a href="../interfaces/LoopingOptions.html#loopImages" class="tsd-kind-property">LoopingOptions.loopImages</a> to <code>&quot;auto&quot;</code>.<br>
+It is enabled by default, and means that the images will start looping if duration and
+threshold conditions are met.</p>
+<p>For example:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th align="center">Image 1</th>
+<th align="center">Image 2</th>
+<th align="center">Image 3</th>
+<th align="center">Audio</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Duration</td>
+<td align="center">3 s</td>
+<td align="center">4 sec</td>
+<td align="center">3 sec</td>
+<td align="center">21 sec</td>
+</tr>
+<tr>
+<td>Transition</td>
+<td align="center">500 ms</td>
+<td align="center">250 ms</td>
+<td align="center">250 ms (if loop)</td>
+<td align="center">-</td>
+</tr>
+</tbody></table>
+<p>So we have a total image duration of 11.75 sec + 250 ms loop transition (if a loop occurs)<br>
+And a total audio duration of 21 sec.</p>
+<p>We have no last image extra duration, and a default end of input threshold of 3 sec (last
+image&#39;s duration).<br>
+And <a href="../interfaces/LoopingOptions.html#imageLoopThreshold" class="tsd-kind-property">LoopingOptions.imageLoopThreshold</a>
+is at its default value <code>&quot;all&quot;</code>.</p>
+<p>After the images have played once, 21 - 11.75 = 9.25 sec of audio is left.</p>
+<p>Our imageLoopThreshold is set to <code>&quot;all&quot;</code>, so all images will need to fit inside a loop for
+a loop to occur. We only have 8.25 sec of audio left, and full loop of images will take 12
+sec, so no loop will be created? No, actually a loop will be created due to our end of input
+threshold being 3 sec. This means we are allowed 9.25 + 3 = 12.25 secs for a new loop.</p>
+<p>Ok, new lets say our end of input threshold is set to <code>1000</code> (1 sec) instead. Now we only have
+9.25 + 1 = 10.25 secs for a new loop. And a full loop of images will take 12 sec, so no loop
+will be created.</p>
+<p>But let&#39;s also change our image loop threshold from <code>&quot;all&quot;</code> to <code>1</code>. This means that only one
+image needs to fit inside a loop for a loop to occur. And our first image is 3 sec long,
+so a loop will be created.<br>
+After the first image has looped, we have 10.25 - (3 + 0.25) = 7 secs left. The second image
+is 4 sec long, so it will also be inserted into the loop. Now we have 7 - (4 + 0.5) = 2.5 secs
+left. Inserting the third image would require 3.25 secs, so it will not be inserted into the
+second loop and the second loop, and whole slideshow, ends.</p>
+<p>Now lets say we have a last image extra duration of 3 sec. This means that the last image
+of a loop will be extended by 3 sec. And now we wouldn&#39;t again have space the second image,
+so the second loop would only contain one image.</p>
+<p><strong>Audio Looping</strong></p>
+<p>Audio looping works in a similar way to image looping, but is a bit simpler. And of course,
+logic is inverted in the sense that we are checking how much video duration time we have left
+for a new loop of the audio track. The end of input threshold is also considered, just as it
+was for image looping.</p>
+<p>For audio looping, <a href="../interfaces/LoopingOptions.html#audioLoopThreshold" class="tsd-kind-property">LoopingOptions.audioLoopThreshold</a>,
+which default to <code>0</code>, exists. It specifies the amount of milliseconds that need to fit into a
+loop an audio loop to occur. Alternatively it can be set to <code>&quot;all&quot;</code>, which means that the
+whole audio track needs to fit into a loop for a loop to occur.</p>
+
+<h4>See</h4><p><a href="../interfaces/SlideshowOptions.html" class="tsd-kind-interface">SlideshowOptions</a> for more information about the options object<br><a href="../interfaces/InputImage.html" class="tsd-kind-interface">InputImage</a> for more information about per image options</p>
+</div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/0x464e/slideshow-video/blob/37ffed9/src/slideshow.ts#L149">slideshow.ts:149</a></li></ul></aside></li></ul></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -74,7 +191,7 @@
 <p style="line-height: 28px;">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a><br>
             <span id="generation-date"></span>
             <script>
-                window.GENERATION_DATE = 1689547827343;
+                window.GENERATION_DATE = 1689623169287;
 
                 (() => {
                     

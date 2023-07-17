@@ -25,8 +25,9 @@
 <p><a href="https://0x464e.github.io/slideshow-video/"><img src="https://img.shields.io/badge/documentation-page-blue.svg" alt="documentation-page"></a>
 <a href="https://www.npmjs.com/package/slideshow-video"><img src="https://img.shields.io/npm/v/slideshow-video.svg" alt="npm-version"></a>
 <a href="https://www.npmjs.com/package/slideshow-video"><img src="https://img.shields.io/npm/dt/slideshow-video.svg" alt="npm-downloads"></a>
-<a href="https://hits.dwyl.com/0x464e/slideshow-video"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fhits.dwyl.com%2F0x464e%2Fslideshow-video.json&color=brightgreen" alt="HitCount"></a></p>
-<p><a href="https://github.com/0x464e/slideshow-video/tree/master/examples">Examples</a> • <a href="https://github.com/0x464e/slideshow-video/issues">Report Bug</a> • <a href="https://github.com/0x464e/slideshow-video/issues">Request Feature</a> • <a href="https://github.com/0x464e/slideshow-video/releases">Releases</a></p>
+<a href="https://discord.gg/SQCzaVeBTa"><img src="https://img.shields.io/badge/Discord-join-738ad6?logo=discord&logoColor=white" alt="discord"></a>
+<a href="https://hits.dwyl.com/0x464e/slideshow-video"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fhits.dwyl.com%2F0x464e%2Fslideshow-video.json&color=brightgreen" alt="hit-count"></a></p>
+<p><a href="https://github.com/0x464e/slideshow-video/tree/master/examples">Examples</a> • <a href="https://github.com/users/0x464e/projects/1">Project Board</a> • <a href="https://github.com/0x464e/slideshow-video/issues">Report Bug</a> • <a href="https://github.com/0x464e/slideshow-video/issues">Request Feature</a> • <a href="https://github.com/0x464e/slideshow-video/releases">Releases</a></p>
 </div>
 
 
@@ -54,9 +55,9 @@ and how long the audio will be, etc. This tool can reliably and automatically cr
 </code><button>Copy</button></pre>
 <a id="md:advanced-example-with-options" class="tsd-anchor"></a><h3><a href="#md:advanced-example-with-options">Advanced example with options</a></h3><details>
     <summary>Click to expand</summary>
-Showcase of some of the available options, and ability to pass in image objects with specific options.<br>
-See full documentation for all available options below.
 
+<p>Showcase of some of the available options, and ability to pass in image objects with specific options.<br>
+See <a href="https://0x464e.github.io/slideshow-video/">the documentation</a> for more information about all the options.</p>
 <pre><code class="language-js"><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">options</span><span class="hl-1"> = {</span><br/><span class="hl-1">    </span><span class="hl-4">imageOptions:</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-4">imageDuration:</span><span class="hl-1"> </span><span class="hl-8">5000</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">imageResizeDimensions:</span><span class="hl-1"> { </span><span class="hl-4">width:</span><span class="hl-1"> </span><span class="hl-8">500</span><span class="hl-1"> }</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    </span><span class="hl-4">loopingOptions:</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-4">loopImages:</span><span class="hl-1"> </span><span class="hl-2">&#39;auto&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">imageLoopThreshold:</span><span class="hl-1"> </span><span class="hl-2">&#39;all&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    </span><span class="hl-4">transitionOptions:</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-4">imageTransition:</span><span class="hl-1"> </span><span class="hl-2">&#39;smoothleft&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">loopTransition:</span><span class="hl-1"> </span><span class="hl-2">&#39;fadeslow&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    </span><span class="hl-4">ffmpegOptions:</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-4">showFfmpegOutput:</span><span class="hl-1"> </span><span class="hl-6">false</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">showFfmpegCommand:</span><span class="hl-1"> </span><span class="hl-6">true</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">fps:</span><span class="hl-1"> </span><span class="hl-8">50</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">streamCopyAudio:</span><span class="hl-1"> </span><span class="hl-6">true</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">videoCodec:</span><span class="hl-1"> </span><span class="hl-2">&#39;libx264&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">x264Preset:</span><span class="hl-1"> </span><span class="hl-2">&#39;ultrafast&#39;</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    </span><span class="hl-4">outputOptions:</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-4">outputBuffer:</span><span class="hl-1"> </span><span class="hl-6">false</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">outputDir:</span><span class="hl-1"> </span><span class="hl-2">&#39;../my-out-folder&#39;</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">};</span><br/><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">imagesWithOptions</span><span class="hl-1"> = [</span><br/><span class="hl-1">    {</span><br/><span class="hl-1">        </span><span class="hl-4">filePath:</span><span class="hl-1"> </span><span class="hl-2">&#39;image1.jpg&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">duration:</span><span class="hl-1"> </span><span class="hl-8">1500</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">transitionDuration:</span><span class="hl-1"> </span><span class="hl-8">700</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    {</span><br/><span class="hl-1">        </span><span class="hl-4">buffer:</span><span class="hl-1"> </span><span class="hl-4">Buffer</span><span class="hl-1">.</span><span class="hl-0">from</span><span class="hl-1">(</span><span class="hl-4">something</span><span class="hl-1">),</span><br/><span class="hl-1">        </span><span class="hl-4">transition:</span><span class="hl-1"> </span><span class="hl-2">&#39;circleclose&#39;</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    {</span><br/><span class="hl-1">        </span><span class="hl-4">filePath:</span><span class="hl-1"> </span><span class="hl-2">&#39;image3.jpg&#39;</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">];</span><br/><br/><span class="hl-0">createSlideshow</span><span class="hl-1">(</span><span class="hl-4">imagesWithOptions</span><span class="hl-1">, </span><span class="hl-4">audio</span><span class="hl-1">, </span><span class="hl-4">options</span><span class="hl-1">).</span><span class="hl-0">then</span><span class="hl-1">(</span><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-4">log</span><span class="hl-1">);</span>
 </code><button>Copy</button></pre>
 </details>
@@ -64,28 +65,142 @@ See full documentation for all available options below.
 
 <!-- createSlideshow begin -->
 <a id="md:createslideshow" class="tsd-anchor"></a><h3><a href="#md:createslideshow">createSlideshow</a></h3><p>▸ <strong>createSlideshow</strong>(<code>images</code>, <code>audio?</code>, <code>options?</code>): <code>Promise</code>&lt;<code>Partial</code>&lt;<a href="https://0x464e.github.io/slideshow-video/interfaces/SlideshowResponse"><code>SlideshowResponse</code></a>&gt;&gt;</p>
-<p>//TODO: document this</p>
+<p>Brains of the operation, entrypoint to this whole package.</p>
+<p>Takes in images, audio, and options from which it automatically creates a slideshow video.</p>
+<p>If images are provided as an <a href="https://0x464e.github.io/slideshow-video/interfaces/InputImage">InputImage</a> array, per image options can be specified.
+Per image options override options specified in the 3rd parameter.<br>
+For example:</p>
+<pre><code class="language-ts"><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">images</span><span class="hl-1">: </span><span class="hl-9">InputImage</span><span class="hl-1">[] = [</span><br/><span class="hl-1">    {</span><br/><span class="hl-1">        </span><span class="hl-4">buffer:</span><span class="hl-1"> </span><span class="hl-4">Buffer</span><span class="hl-1">.</span><span class="hl-0">from</span><span class="hl-1">(</span><span class="hl-4">myImage</span><span class="hl-1">),</span><br/><span class="hl-1">        </span><span class="hl-4">duration:</span><span class="hl-1"> </span><span class="hl-8">5000</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    {</span><br/><span class="hl-1">        </span><span class="hl-4">filePath:</span><span class="hl-1"> </span><span class="hl-2">&#39;image2.jpg&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">transition:</span><span class="hl-1"> </span><span class="hl-2">&#39;dissolve&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">transitionDuration:</span><span class="hl-1"> </span><span class="hl-8">200</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    {</span><br/><span class="hl-1">        </span><span class="hl-4">filePath:</span><span class="hl-1"> </span><span class="hl-2">&#39;../../../documents/image3.png&#39;</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">];</span><br/><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">options</span><span class="hl-1">: </span><span class="hl-9">SlideshowOptions</span><span class="hl-1"> = {</span><br/><span class="hl-1">    </span><span class="hl-4">imageOptions:</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-4">imageDuration:</span><span class="hl-1"> </span><span class="hl-8">3500</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    </span><span class="hl-4">transitionOptions:</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-4">transitionDuration:</span><span class="hl-1"> </span><span class="hl-8">500</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">};</span>
+</code><button>Copy</button></pre>
+<p>The tree input images broken down:</p>
+<p>First image, buffer input, overrides duration</p>
+<ul>
+<li>Has a duration of 5000ms</li>
+<li>500ms transition (specified in options object) to the next image
+with the default transition (<code>slideleft</code>)</li>
+</ul>
+<p>Second image, file path input, overrides transition and transition duration</p>
+<ul>
+<li>Has a duration of 3500ms, specified in the options object</li>
+<li>200 ms transition to the next image with the <code>dissolve</code> transition</li>
+</ul>
+<p>Third image, file path input, uses default options</p>
+<ul>
+<li>Has a duration of 3500ms, specified in the options object</li>
+<li>Will have no normal transition as it&#39;s the last image</li>
+<li>Might have a 500ms loop transition (by default <code>pixelize</code>),
+if image and audio durations permit it</li>
+<li>See remarks section for more about durations and looping</li>
+</ul>
+<p><a name="duration-looping"></a></p>
+<p><strong><code>Remarks</code></strong></p>
+<p><strong>Duration and looping</strong></p>
+<p>Possible total duration for one loop of images consist of the following:</p>
+<ul>
+<li>Image duration (set globally in <a href="https://0x464e.github.io/slideshow-video/interfaces/ImageOptions">ImageOptions.imageDuration</a>
+or per image in <a href="https://0x464e.github.io/slideshow-video/interfaces/InputImage">InputImage.duration</a>)</li>
+<li>Transition duration (set globally in <a href="https://0x464e.github.io/slideshow-video/interfaces/TransitionOptions">TransitionOptions.transitionDuration</a>
+or per image in <a href="https://0x464e.github.io/slideshow-video/interfaces/InputImage">InputImage.transitionDuration</a>)</li>
+<li>Loop transition duration (also set in <a href="https://0x464e.github.io/slideshow-video/interfaces/TransitionOptions">TransitionOptions.transitionDuration</a>)</li>
+<li>Last image extra duration (set in <a href="https://0x464e.github.io/slideshow-video/interfaces/ImageOptions">ImageOptions.lastImageExtraDuration</a>)</li>
+<li>End of input threshold (set in <a href="https://0x464e.github.io/slideshow-video/interfaces/LoopingOptions">LoopingOptions.endOfInputThreshold</a>)</li>
+</ul>
+<p>Audio duration is simply just the duration of the audio.</p>
+<p><strong>Image Looping</strong></p>
+<p>Image looping is enabled by setting <a href="https://0x464e.github.io/slideshow-video/interfaces/LoopingOptions">LoopingOptions.loopImages</a> to <code>&quot;auto&quot;</code>.<br>
+It is enabled by default, and means that the images will start looping if duration and
+threshold conditions are met.</p>
+<p>For example:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th align="center">Image 1</th>
+<th align="center">Image 2</th>
+<th align="center">Image 3</th>
+<th align="center">Audio</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Duration</td>
+<td align="center">3 s</td>
+<td align="center">4 sec</td>
+<td align="center">3 sec</td>
+<td align="center">21 sec</td>
+</tr>
+<tr>
+<td>Transition</td>
+<td align="center">500 ms</td>
+<td align="center">250 ms</td>
+<td align="center">250 ms (if loop)</td>
+<td align="center">-</td>
+</tr>
+</tbody></table>
+<p>So we have a total image duration of 11.75 sec + 250 ms loop transition (if a loop occurs)<br>
+And a total audio duration of 21 sec.</p>
+<p>We have no last image extra duration, and a default end of input threshold of 3 sec (last
+image&#39;s duration).<br>
+And <a href="https://0x464e.github.io/slideshow-video/interfaces/LoopingOptions">LoopingOptions.imageLoopThreshold</a>
+is at its default value <code>&quot;all&quot;</code>.</p>
+<p>After the images have played once, 21 - 11.75 = 9.25 sec of audio is left.</p>
+<p>Our imageLoopThreshold is set to <code>&quot;all&quot;</code>, so all images will need to fit inside a loop for
+a loop to occur. We only have 8.25 sec of audio left, and full loop of images will take 12
+sec, so no loop will be created? No, actually a loop will be created due to our end of input
+threshold being 3 sec. This means we are allowed 9.25 + 3 = 12.25 secs for a new loop.</p>
+<p>Ok, new lets say our end of input threshold is set to <code>1000</code> (1 sec) instead. Now we only have
+9.25 + 1 = 10.25 secs for a new loop. And a full loop of images will take 12 sec, so no loop
+will be created.</p>
+<p>But let&#39;s also change our image loop threshold from <code>&quot;all&quot;</code> to <code>1</code>. This means that only one
+image needs to fit inside a loop for a loop to occur. And our first image is 3 sec long,
+so a loop will be created.<br>
+After the first image has looped, we have 10.25 - (3 + 0.25) = 7 secs left. The second image
+is 4 sec long, so it will also be inserted into the loop. Now we have 7 - (4 + 0.5) = 2.5 secs
+left. Inserting the third image would require 3.25 secs, so it will not be inserted into the
+second loop and the second loop, and whole slideshow, ends.</p>
+<p>Now lets say we have a last image extra duration of 3 sec. This means that the last image
+of a loop will be extended by 3 sec. And now we wouldn&#39;t again have space the second image,
+so the second loop would only contain one image.</p>
+<p><strong>Audio Looping</strong></p>
+<p>Audio looping works in a similar way to image looping, but is a bit simpler. And of course,
+logic is inverted in the sense that we are checking how much video duration time we have left
+for a new loop of the audio track. The end of input threshold is also considered, just as it
+was for image looping.</p>
+<p>For audio looping, <a href="https://0x464e.github.io/slideshow-video/interfaces/LoopingOptions">LoopingOptions.audioLoopThreshold</a>,
+which default to <code>0</code>, exists. It specifies the amount of milliseconds that need to fit into a
+loop an audio loop to occur. Alternatively it can be set to <code>&quot;all&quot;</code>, which means that the
+whole audio track needs to fit into a loop for a loop to occur.</p>
+<p><strong><code>See</code></strong></p>
+<p><a href="https://0x464e.github.io/slideshow-video/interfaces/SlideshowOptions">SlideshowOptions</a> for more information about the options object<br><a href="https://0x464e.github.io/slideshow-video/interfaces/InputImage">InputImage</a> for more information about per image options</p>
+<p><strong><code>Example</code></strong></p>
+<p>//TODO</p>
 <a id="md:parameters" class="tsd-anchor"></a><h4><a href="#md:parameters">Parameters</a></h4><table>
 <thead>
 <tr>
 <th align="left">Name</th>
 <th align="left">Type</th>
+<th align="left">Description</th>
 </tr>
 </thead>
 <tbody><tr>
 <td align="left"><code>images</code></td>
 <td align="left"><code>string</code>[] | <code>Buffer</code>[] | <a href="https://0x464e.github.io/slideshow-video/interfaces/InputImage"><code>InputImage</code></a>[]</td>
+<td align="left">Images to be used in the slideshow.<br> Either a file path, buffer, or an <a href="https://0x464e.github.io/slideshow-video/interfaces/InputImage">InputImage</a></td>
 </tr>
 <tr>
 <td align="left"><code>audio?</code></td>
 <td align="left"><code>string</code> | <code>Buffer</code></td>
+<td align="left">Audio to be used in the slideshow.<br> Either a file path or buffer.<br> Can be undefined, so the slideshow will have no audio</td>
 </tr>
 <tr>
 <td align="left"><code>options?</code></td>
 <td align="left"><a href="https://0x464e.github.io/slideshow-video/interfaces/SlideshowOptions"><code>SlideshowOptions</code></a></td>
+<td align="left">Options object to configure the slideshow creation</td>
 </tr>
 </tbody></table>
 <a id="md:returns" class="tsd-anchor"></a><h4><a href="#md:returns">Returns</a></h4><p><code>Promise</code>&lt;<code>Partial</code>&lt;<a href="https://0x464e.github.io/slideshow-video/interfaces/SlideshowResponse"><code>SlideshowResponse</code></a>&gt;&gt;</p>
+<p>A promise that resolves to a partial <a href="https://0x464e.github.io/slideshow-video/interfaces/SlideshowResponse">SlideshowResponse</a> object.<br>
+Available fields in the response object depend on what was specified in <a href="https://0x464e.github.io/slideshow-video/interfaces/OutputOptions">OutputOptions</a>.<br>
+By default, only a buffer of the resulting slideshow video is returned.</p>
 <!-- createSlideshow end -->
 
 <!-- MARKDOWN LINKS & IMAGES -->
@@ -145,7 +260,7 @@ See full documentation for all available options below.
 <p style="line-height: 28px;">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a><br>
             <span id="generation-date"></span>
             <script>
-                window.GENERATION_DATE = 1689547827324;
+                window.GENERATION_DATE = 1689623169274;
 
                 (() => {
                     
