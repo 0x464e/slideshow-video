@@ -151,6 +151,8 @@ const options: SlideshowOptions = {
         transitionDuration: 500
     }
 };
+
+const response = await createSlideshow(images, './music/audio.mp3', options);
 ```
 
 The tree input images broken down:
@@ -191,45 +193,45 @@ Audio duration is simply just the duration of the audio.
 **Image Looping**
 
 Image looping is enabled by setting [LoopingOptions.loopImages](https://0x464e.github.io/slideshow-video/interfaces/LoopingOptions) to `"auto"`.<br>
-It is enabled by default, and means that the images will start looping if duration and
-threshold conditions are met.
+It is set to `"never"` by default. `"auto"` means that the images will start looping if duration
+and threshold conditions are met.
 
 For example:
 
 |            | Image 1 | Image 2 |      Image 3      |  Audio |
 |------------|:-------:|:-------:|:-----------------:|:------:|
-| Duration   |   3 s   |  4 sec  |       3 sec       | 21 sec |
-| Transition |  500 ms |  250 ms |  250 ms (if loop) |    -   |
+| Duration   |  3.5 s  |  4 sec  |      3.5 sec      | 21 sec |
+| Transition |  500 ms |  300 ms |  250 ms (if loop) |    -   |
 
-So we have a total image duration of 11.75 sec + 250 ms loop transition (if a loop occurs)<br>
+So we have a total image duration of 11.8 sec + 250 ms loop transition (if a loop occurs)<br>
 And a total audio duration of 21 sec.
 
-We have no last image extra duration, and a default end of input threshold of 3 sec (last
+We have no last image extra duration, and a default end of input threshold of 3.5 sec (last
 image's duration).<br>
 And [LoopingOptions.imageLoopThreshold](https://0x464e.github.io/slideshow-video/interfaces/LoopingOptions)
 is at its default value `"all"`.
 
-After the images have played once, 21 - 11.75 = 9.25 sec of audio is left.
+After the images have played once, 21 - 11.8 = 9.2 sec of audio is left.
 
 Our imageLoopThreshold is set to `"all"`, so all images will need to fit inside a loop for
-a loop to occur. We only have 8.25 sec of audio left, and full loop of images will take 12
+a loop to occur. We only have 9.2 sec of audio left, and full loop of images will take 12.05
 sec, so no loop will be created? No, actually a loop will be created due to our end of input
-threshold being 3 sec. This means we are allowed 9.25 + 3 = 12.25 secs for a new loop.
+threshold being 3.5 sec. This means we are allowed 9.2 + 3.5 = 12.7 secs for a new loop.
 
-Ok, new lets say our end of input threshold is set to `1000` (1 sec) instead. Now we only have
-9.25 + 1 = 10.25 secs for a new loop. And a full loop of images will take 12 sec, so no loop
+Ok, new lets say our end of input threshold is set to `2000` (1 sec) instead. Now we only have
+9.2 + 2 = 11.2 secs for a new loop. And a full loop of images will take 12.05 sec, so no loop
 will be created.
 
 But let's also change our image loop threshold from `"all"` to `1`. This means that only one
-image needs to fit inside a loop for a loop to occur. And our first image is 3 sec long,
+image needs to fit inside a loop for a loop to occur. And our first image is 3.5 sec long,
 so a loop will be created.<br>
-After the first image has looped, we have 10.25 - (3 + 0.25) = 7 secs left. The second image
-is 4 sec long, so it will also be inserted into the loop. Now we have 7 - (4 + 0.5) = 2.5 secs
-left. Inserting the third image would require 3.25 secs, so it will not be inserted into the
+After the first image has looped, we have 11.2 - (3.5 + 0.25) = 7.45 secs left. The second image
+is 4 sec long, so it will also be inserted into the loop. Now we have 7.45 - (4 + 0.5) = 2.95 secs
+left. Inserting the third image would require 3.75 secs, so it will not be inserted into the
 second loop and the second loop, and whole slideshow, ends.
 
-Now lets say we have a last image extra duration of 3 sec. This means that the last image
-of a loop will be extended by 3 sec. And now we wouldn't again have space the second image,
+Now lets say we have a last image extra duration of 3 sec. This means that the last image of a
+full loop will be extended by 3 sec. And now we wouldn't again have space for the second image,
 so the second loop would only contain one image.
 
 **Audio Looping**
@@ -248,10 +250,6 @@ whole audio track needs to fit into a loop for a loop to occur.
 
 [SlideshowOptions](https://0x464e.github.io/slideshow-video/interfaces/SlideshowOptions) for more information about the options object\
 [InputImage](https://0x464e.github.io/slideshow-video/interfaces/InputImage) for more information about per image options
-
-**`Example`**
-
-//TODO
 
 #### Parameters
 
