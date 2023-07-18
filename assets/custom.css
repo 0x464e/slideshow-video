@@ -1,0 +1,9 @@
+/* Fix tables not having borders */
+table {
+    border-collapse: collapse;
+}
+
+td, th {
+    border: 1px solid black;
+    padding: 5px;
+}
