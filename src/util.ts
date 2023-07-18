@@ -23,10 +23,8 @@ export const validateInput = async (
     // if input was string[]
     if (typeof images[0] === 'string') {
         await checkFileExists(images as string[]);
-    }
-
-    // if input was InputImage[]
-    if (!Buffer.isBuffer((images as Buffer[])[0])) {
+    } else if (!Buffer.isBuffer((images as Buffer[])[0])) {
+        // if input was InputImage[]
         const lastImgTransition = (images as InputImage[]).at(-1)?.transition;
         const lastImgTransitionDuration = (images as InputImage[]).at(-1)?.transitionDuration;
         if (
