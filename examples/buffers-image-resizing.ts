@@ -42,13 +42,13 @@ const execFileAsync = promisify(execFile);
 
     // 3000x1000 image, very large, we wouldn't want such a resolution in our slideshow
     // the largest width image, so its width will be used as a base for the aspect ratio
-    const { data: img3000x2000 } = await axios.get<Buffer>('https://picsum.photos/3000/1000', {
+    const { data: img3000x1000 } = await axios.get<Buffer>('https://picsum.photos/3000/1000', {
         responseType: 'arraybuffer'
     });
 
     // 1281x1500 image, width is not divisible by 2, which is not good for encoding
     // the largest height image, so its height will be used as a base for the aspect ratio
-    const { data: img901x600 } = await axios.get<Buffer>('https://picsum.photos/1281/1500', {
+    const { data: img1281x1500 } = await axios.get<Buffer>('https://picsum.photos/1281/1500', {
         responseType: 'arraybuffer'
     });
 
@@ -79,7 +79,7 @@ const execFileAsync = promisify(execFile);
     };
 
     const response: Partial<SlideshowResponse> = await createSlideshow(
-        [img200x300, img3000x2000, img901x600, img420x630],
+        [img200x300, img3000x1000, img1281x1500, img420x630],
         audio,
         options
     );
