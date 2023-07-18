@@ -20,3 +20,11 @@ documentation section.
 ```sh
 npx ts-node duration-looping-demo.ts
 ```
+
+### [buffers-image-resizing.ts](https://github.com/0x464e/slideshow-video/blob/master/examples/buffers-image-resizing.ts)
+Demo about how to create a slideshow from buffers and teaches about how images are resized.  
+Also a random duration audio is generated each run, how image/audio looping happens with different durations.
+
+```sh
+npx ts-node buffers-image-resizing.ts
+```

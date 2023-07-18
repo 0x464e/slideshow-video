@@ -198,6 +198,12 @@ export const createSlideshow = async (
     return response;
 };
 
+/**
+ * Width and high of every image is checked, and the largest of both are saved.\
+ * This gives the target aspect ratio of the slideshow (or resolution) of the slideshow.\
+ * If either a resize width or height is specified alone, the other dimension is calculated
+ * via the target aspect ratio.
+ */
 export interface ImageResizeDimensions {
     /**
      * Image width in pixels.\
