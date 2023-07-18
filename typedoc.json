@@ -15,6 +15,7 @@
   "jsDocCompatibility": {
     "exampleTag": false
   },
+  "customCss": "assets/docs-styles.css",
   "plugin": [
     "typedoc-plugin-extras"
   ],
