@@ -8,7 +8,7 @@
     "url": "https://github.com/0x464e/slideshow-video/issues"
   },
   "author": "0x464e",
-  "license": "ISC",
+  "license": "LGPL-3.0",
   "main": "dist/index.js",
   "scripts": {
     "start": "ts-node src/index.ts",
