@@ -18,7 +18,7 @@ chdir(__dirname);
 const execFileAsync = promisify(execFile);
 
 (async () => {
-    const audio = './image-audio-files/buffers-image-resizing/audio.wav';
+    const audio = './image-audio-files/buffers-image-resizing/audio.mp3';
 
     // random duration between 1 and 40 seconds
     const audioDuration = Math.floor(Math.random() * 40) + 1;
@@ -74,6 +74,9 @@ const execFileAsync = promisify(execFile);
         loopingOptions: {
             loopImages: 'auto',
             loopAudio: 'auto'
+        },
+        ffmpegOptions: {
+            streamCopyAudio: true
         },
         outputOptions: {
             outputDir: '.'
