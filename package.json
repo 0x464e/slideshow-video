@@ -1,9 +1,21 @@
 {
   "name": "slideshow-video",
-  "version": "1.0.0",
-  "description": "",
-  "keywords": [],
-  "homepage": "https://github.com/0x464e/slideshow-video",
+  "version": "0.0.0-automatic",
+  "description": "NodeJS and FFmpeg powered automated creation of video slideshows from input images. Fully automatic, no manual editing required.",
+  "keywords": [
+    "slideshow",
+    "slides",
+    "ffmpeg",
+    "image",
+    "typescript",
+    "video",
+    "nodejs",
+    "tiktok-slides",
+    "photo",
+    "automatic",
+    "promise"
+  ],
+  "homepage": "https://0x464e.github.io/slideshow-video/",
   "bugs": {
     "url": "https://github.com/0x464e/slideshow-video/issues"
   },
@@ -24,17 +36,19 @@
     "@typescript-eslint/eslint-plugin": "^5.61.0",
     "@typescript-eslint/parser": "^5.61.0",
     "axios": "^1.4.0",
+    "conventional-changelog-eslint": "^4.0.0",
     "eslint": "^8.44.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.0",
     "prettier": "^3.0.0",
+    "semantic-release": "^21.0.7",
     "shx": "^0.3.4",
     "ts-node": "^10.9.1",
     "typedoc": "^0.24.8",
     "typedoc-plugin-extras": "^2.3.3",
     "typedoc-plugin-markdown": "^3.15.3",
-    "typescript": "^5.1.6",
-    "husky": "^8.0.0"
+    "typescript": "^5.1.6"
   },
   "dependencies": {
     "@ffprobe-installer/ffprobe": "^2.0.0",
@@ -50,6 +64,5 @@
   "files": [
     "dist"
   ],
-  "repository": "github:0x464e/slideshow-video",
-  "private": true
+  "repository": "github:0x464e/slideshow-video"
 }

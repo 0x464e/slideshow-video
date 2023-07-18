@@ -1,0 +1,38 @@
+{
+  "plugins": [
+    [
+      "@semantic-release/commit-analyzer",
+      {
+        "preset": "eslint",
+        "releaseRules": [
+          { "tag": "Docs", "message": "*README*", "release": "patch" }
+        ]
+      }
+    ],
+    [
+      "@semantic-release/release-notes-generator",
+      {
+        "preset": "eslint"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "tarballDir": "tarballs"
+      }
+    ],
+    [
+      "@semantic-release/github",
+      {
+        "failComment": false,
+        "addReleases": "bottom",
+        "assets": [
+          {
+            "path": "tarballs/*.tgz",
+            "name": "slideshow-video.tgz"
+          }
+        ]
+      }
+    ]
+  ]
+}
