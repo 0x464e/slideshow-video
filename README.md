@@ -234,6 +234,13 @@ Now lets say we have a last image extra duration of 3 sec. This means that the l
 full loop will be extended by 3 sec. And now we wouldn't again have space for the second image,
 so the second loop would only contain one image.
 
+You can run this example as code from the
+[examples](https://github.com/0x464e/slideshow-video/tree/master/examples) folder.
+
+```sh
+npx ts-node examples/duration-looping.ts
+```
+
 **Audio Looping**
 
 Audio looping works in a similar way to image looping, but is a bit simpler. And of course,

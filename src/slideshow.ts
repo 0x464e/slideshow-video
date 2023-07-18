@@ -40,6 +40,8 @@ import { Ffmpeg } from './ffmpeg';
  *         transitionDuration: 500
  *     }
  * };
+ *
+ * const response = await createSlideshow(images, './music/audio.mp3', options);
  * ```
  *
  * The tree input images broken down:
@@ -119,6 +121,13 @@ import { Ffmpeg } from './ffmpeg';
  * Now lets say we have a last image extra duration of 3 sec. This means that the last image of a
  * full loop will be extended by 3 sec. And now we wouldn't again have space for the second image,
  * so the second loop would only contain one image.
+ *
+ * You can run this example as code from the
+ * [examples](https://github.com/0x464e/slideshow-video/tree/master/examples) folder.
+ *
+ * ```sh
+ * npx ts-node examples/duration-looping.ts
+ * ```
  *
  * **Audio Looping**
  *
