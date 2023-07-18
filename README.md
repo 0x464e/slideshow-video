@@ -244,12 +244,12 @@ npx ts-node examples/duration-looping.ts
 **Audio Looping**
 
 Audio looping works in a similar way to image looping, but is a bit simpler. And of course,
-logic is inverted in the sense that we are checking how much video duration time we have left
+the logic is inverted in the sense that we are checking how much video duration time we have left
 for a new loop of the audio track. The end of input threshold is also considered, just as it
 was for image looping.
 
 For audio looping, [LoopingOptions.audioLoopThreshold](https://0x464e.github.io/slideshow-video/interfaces/LoopingOptions),
-which default to `0`, exists. It specifies the amount of milliseconds that need to fit into a
+which default to `0`, exists. It specifies the amount of milliseconds that need to fit inside a
 loop an audio loop to occur. Alternatively it can be set to `"all"`, which means that the
 whole audio track needs to fit into a loop for a loop to occur.
 
