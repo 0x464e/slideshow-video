@@ -12,6 +12,15 @@ npx ts-node examples/example.ts
 
 And that's it.
 
+### [all-default-settings.ts](https://github.com/0x464e/slideshow-video/blob/master/examples/all-default-settings.ts)
+Demo about how to create a slideshow with all the default settings.  
+As simple as it gets, audio duration is about 30sec, and image duration about 42 sec, 
+so the audio will loop.
+
+```sh
+npx ts-node all-default-settings.ts
+```
+
 ### [duration-looping-demo.ts](https://github.com/0x464e/slideshow-video/blob/master/examples/duration-looping-demo.ts)
 Demo about how duration and looping works.  
 The demo should be followed via the [duration and looping](https://github.com/0x464e/slideshow-video#duration-looping) 

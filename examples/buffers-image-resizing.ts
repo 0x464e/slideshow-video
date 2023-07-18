@@ -23,6 +23,7 @@ const execFileAsync = promisify(execFile);
     // random duration between 1 and 40 seconds
     const audioDuration = Math.floor(Math.random() * 40) + 1;
 
+    console.log('Generating audio with duration of about', audioDuration, 'seconds...');
     // create audio file with the random duration (just a sine wave)
     await execFileAsync(ffmpeg as string, [
         '-f',
@@ -35,6 +36,7 @@ const execFileAsync = promisify(execFile);
         '-y'
     ]);
 
+    console.log('Downloading images from https://picsum.photos/...');
     // 200x300 image, tiny will get scaled up
     const { data: img200x300 } = await axios.get<Buffer>('https://picsum.photos/200/300', {
         responseType: 'arraybuffer'
@@ -78,12 +80,11 @@ const execFileAsync = promisify(execFile);
         }
     };
 
+    console.log('Creating slideshow...');
     const response: Partial<SlideshowResponse> = await createSlideshow(
         [img200x300, img3000x1000, img1281x1500, img420x630],
         audio,
         options
     );
-    console.log(
-        `Created ${response.filePath}, random audio duration was about ${audioDuration} seconds`
-    );
+    console.log('created slideshow: ', response.filePath);
 })();
