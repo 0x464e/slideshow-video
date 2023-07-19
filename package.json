@@ -26,7 +26,8 @@
     "start": "ts-node src/index.ts",
     "prepare": "tsc",
     "typedoc-md": "typedoc --options typedoc-md.json",
-    "typedoc-md-to-readme": "npm run typedoc-md && node typedoc-md-to-readme.js && shx rm -rf docs-md"
+    "typedoc-md-to-readme": "npm run typedoc-md && node typedoc-md-to-readme.js && shx rm -rf docs-md",
+    "readme-toc": "markdown-toc -i README.md"
   },
   "devDependencies": {
     "@tsconfig/node20": "^1.0.2",
@@ -41,6 +42,7 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
     "husky": "^8.0.0",
+    "markdown-toc": "^1.2.0",
     "prettier": "^3.0.0",
     "semantic-release": "^21.0.7",
     "shx": "^0.3.4",

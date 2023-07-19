@@ -17,6 +17,32 @@
 
 </div>
 
+---
+
+## Table of Contents
+
+<details>
+    <summary>Click to expand</summary>
+
+<!-- toc -->
+
+- [About The Project](#about-the-project)
+- [Installation & Usage](#installation--usage)
+  * [Basic example with all default settings](#basic-example-with-all-default-settings)
+  * [Advanced example with options](#advanced-example-with-options)
+- [Features](#features)
+- [Documentation](#documentation)
+  * [createSlideshow](#createslideshow)
+    + [Parameters](#parameters)
+    + [Returns](#returns)
+- [Examples](#examples)
+- [Optimization & System Requirements](#optimization--system-requirements)
+- [Support & Requests](#support--requests)
+- [Comparison with videoshow](#comparison-with-videoshow)
+
+<!-- tocstop -->
+
+</details>
 
 ## About The Project 
 This tool uses ffmpeg to automatically create slideshow videos from images. 
@@ -34,13 +60,15 @@ to manually tailor settings for every run.
 
 The main inspiration for this tool is automated creation of videos from TikTok slideshows. 
 With those you never know how many images there will be, what their dimensions will be, 
-and how long the audio will be, etc. This tool can reliably and automatically create videos from them.
+and how long the audio will be, etc. This tool can reliably and automatically create videos from them.  
+<sup><sub>This is my first TypeScript project and npm package, 
+feel free to tell me what I'm doing wrong or could be doing better.</sup></sub>
 
 ## Installation & Usage
 Install the package from npm:
 
 ```sh
-$ npm install slideshow-video
+npm install slideshow-video
 ```
 
 Then simply use it in your code:  
@@ -114,6 +142,22 @@ createSlideshow(imagesWithOptions, audio, options).then(console.log);
 
 </details>
 
+## Features
+- Automatic creation of a slideshow video from images
+- Add audio to the video
+- Local file paths or buffers
+- Automatic and configurable resizing of images
+- Configurable transitions between images
+- Global and/or per image configurable options
+- Automatically detect if image or audio looping is needed, configurable
+- Support for stream copying and concat muxing for very low system resource usage and fast encoding
+- Configurable FFmpeg options, output in any video format
+- Output to file or buffer
+
+## Documentation
+Full documentation is hosted on the [documentation site][documentation-url].
+
+Documentation for the main function, `createSlideshow`, is also available below.
 
 <!-- createSlideshow begin -->
 ### createSlideshow
@@ -274,6 +318,66 @@ A promise that resolves to a partial [SlideshowResponse](https://0x464e.github.i
 Available fields in the response object depend on what was specified in [OutputOptions](https://0x464e.github.io/slideshow-video/interfaces/OutputOptions).<br>
 By default, only a buffer of the resulting slideshow video is returned.
 <!-- createSlideshow end -->
+
+## Examples
+You can find examples about the usage of this library in the [examples][examples-url] folder.  
+If you use this for something and want it to be shown here an example, I'd be glad to add it!  
+
+## Optimization & System Requirements
+Video encoding is a very CPU/memory intensive task. FFmpeg will suck back as much memory as it needs to complete 
+its task. If memory runs out, FFmpeg probably gets killed by the OS. However, it's possible to use very little memory.
+
+To optimize memory usage, consider the following:
+- Never run parallel slideshow creations
+- Don't use an unnecessarily high resolution
+- Transitions will use a lot of memory compared to not using them
+- Use 'libx264' or some other easy to encode codec
+- Use a fast x264 preset (if using x264)
+
+Example memory usages 26 images with 1284x1350 resolution, no image looping, audio loops once, ran on my local machine WSL2:
+- Transitions enabled, no resolution scaling, default x264 preset (medium)
+  - 3.8 GB memory usage
+- Transitions enabled, no resolution scaling, ultrafast x264 preset
+  - 3.24 GB memory usage
+- Transition enabled, scaled to 500px height, ultrafast x264 preset
+  - 568 MB memory usage
+- Transitions disabled, no resolution scaling, ultrafast x264 preset
+  - 420 MB memory usage 
+- Transitions disabled, scaled to 500px height, ultrafast x264 preset
+  - 283 MB memory usage
+
+## Support & Requests
+Please report any issues you find on the [issues page][issues-url].  
+You can also join the [discord server][discord-url] I just created to ask questions or request features or whatever.
+
+## Comparison with videoshow
+[videoshow](https://www.npmjs.com/package/videoshow) is another npm package that generate slideshow videos.  
+It's very old, unmaintained, and didn't have some of the features I wanted, so I made this package.
+
+Let's compare the two packages:  
+<sup><sub>Yes, I'm obviously biased, but all the points are factual as far as I know</sup></sub>
+
+| Feature                        | slideshow-video | videoshow | Notes                                                                                               |
+|--------------------------------|:---------------:|:---------:|-----------------------------------------------------------------------------------------------------|
+| Currently maintained           |        ✅        |     ❌     |                                                                                                     |
+| Usable fully automatically     |        ✅        |     ❌     | videoshow can't function if you don't control what<br>will be passed into it (unless you get lucky) |
+| Included cross-platform FFmpeg |        ✅        |     ❌     | with videoshow, you have to install and configure ffmpeg manually                                   |
+| Promise support                |        ✅        |     ❌     |                                                                                                     |
+| TypeScript support             |        ✅        |     ❌     |                                                                                                     |
+| Buffer support                 |        ✅        |     ❌     |                                                                                                     |
+| Transitions                    |        ✅        |    🟡     | Only one transition available vs 50 in slideshow-video                                              |
+| Per image config               |        ✅        |     ✅     |                                                                                                     |
+| Support mixed image dimensions |        ✅        |     ❌     | In videoshow, all input images must have same the dimensions                                        |
+| Image/audio looping            |        ✅        |     ❌     |                                                                                                     |
+| Configurable FFmpeg options    |        ✅        |     ✅     |                                                                                                     |
+| Output to buffer               |        ✅        |     ❌     |                                                                                                     |
+| CLI interface                  |        ❌        |     ✅     | Planned feature for slideshow-video                                                                 |
+| Logo support                   |        ❌        |     ✅     |                                                                                                     |
+| Subtitles support              |        ❌        |     ✅     |                                                                                                     |
+| Custom FFmpeg filters support  |        ❌        |     ✅     |                                                                                                     |
+
+
+
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [documentation-page-shield]: https://img.shields.io/badge/documentation-page-blue.svg
