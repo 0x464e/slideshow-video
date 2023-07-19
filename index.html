@@ -30,6 +30,36 @@
 <p><a href="https://github.com/0x464e/slideshow-video/tree/master/examples">Examples</a> • <a href="https://github.com/users/0x464e/projects/1">Project Board</a> • <a href="https://github.com/0x464e/slideshow-video/issues">Report Bug</a> • <a href="https://github.com/0x464e/slideshow-video/issues">Request Feature</a> • <a href="https://github.com/0x464e/slideshow-video/releases">Releases</a></p>
 </div>
 
+<hr>
+<a id="md:table-of-contents" class="tsd-anchor"></a><h2><a href="#md:table-of-contents">Table of Contents</a></h2><details>
+    <summary>Click to expand</summary>
+
+<!-- toc -->
+
+<ul>
+<li><a href="#about-the-project">About The Project</a></li>
+<li><a href="#installation--usage">Installation &amp; Usage</a><ul>
+<li><a href="#basic-example-with-all-default-settings">Basic example with all default settings</a></li>
+<li><a href="#advanced-example-with-options">Advanced example with options</a></li>
+</ul>
+</li>
+<li><a href="#features">Features</a></li>
+<li><a href="#documentation">Documentation</a><ul>
+<li><a href="#createslideshow">createSlideshow</a><ul>
+<li><a href="#parameters">Parameters</a></li>
+<li><a href="#returns">Returns</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#examples">Examples</a></li>
+<li><a href="#optimization--system-requirements">Optimization &amp; System Requirements</a></li>
+<li><a href="#support--requests">Support &amp; Requests</a></li>
+<li><a href="#comparison-with-videoshow">Comparison with videoshow</a></li>
+</ul>
+<!-- tocstop -->
+
+</details>
 
 <a id="md:about-the-project" class="tsd-anchor"></a><h2><a href="#md:about-the-project">About The Project</a></h2><p>This tool uses ffmpeg to automatically create slideshow videos from images. 
 Cross-platform support is ensured, and it comes bundled with ffmpeg and ffprobe binaries.
@@ -45,9 +75,10 @@ to manually tailor settings for every run.</p>
 <p><strong>No problem</strong>, configure your settings once and let the tool do the rest.</p>
 <p>The main inspiration for this tool is automated creation of videos from TikTok slideshows. 
 With those you never know how many images there will be, what their dimensions will be, 
-and how long the audio will be, etc. This tool can reliably and automatically create videos from them.</p>
+and how long the audio will be, etc. This tool can reliably and automatically create videos from them.<br><sup><sub>This is my first TypeScript project and npm package, 
+feel free to tell me what I&#39;m doing wrong or could be doing better.</sup></sub></p>
 <a id="md:installation-amp-usage" class="tsd-anchor"></a><h2><a href="#md:installation-amp-usage">Installation &amp; Usage</a></h2><p>Install the package from npm:</p>
-<pre><code class="language-sh"><span class="hl-0">$</span><span class="hl-1"> </span><span class="hl-2">npm</span><span class="hl-1"> </span><span class="hl-2">install</span><span class="hl-1"> </span><span class="hl-2">slideshow-video</span>
+<pre><code class="language-sh"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">install</span><span class="hl-1"> </span><span class="hl-2">slideshow-video</span>
 </code><button>Copy</button></pre>
 <p>Then simply use it in your code:<br><sup><sub>(in reality you probably want to await, I just used <code>.then()</code> better compatibility 
 (top level await is a bit iffy to setup))</sup></sub></p>
@@ -62,7 +93,20 @@ See <a href="https://0x464e.github.io/slideshow-video/">the documentation</a> fo
 </code><button>Copy</button></pre>
 </details>
 
-
+<a id="md:features" class="tsd-anchor"></a><h2><a href="#md:features">Features</a></h2><ul>
+<li>Automatic creation of a slideshow video from images</li>
+<li>Add audio to the video</li>
+<li>Local file paths or buffers</li>
+<li>Automatic and configurable resizing of images</li>
+<li>Configurable transitions between images</li>
+<li>Global and/or per image configurable options</li>
+<li>Automatically detect if image or audio looping is needed, configurable</li>
+<li>Support for stream copying and concat muxing for very low system resource usage and fast encoding</li>
+<li>Configurable FFmpeg options, output in any video format</li>
+<li>Output to file or buffer</li>
+</ul>
+<a id="md:documentation" class="tsd-anchor"></a><h2><a href="#md:documentation">Documentation</a></h2><p>Full documentation is hosted on the <a href="https://0x464e.github.io/slideshow-video/">documentation site</a>.</p>
+<p>Documentation for the main function, <code>createSlideshow</code>, is also available below.</p>
 <!-- createSlideshow begin -->
 <a id="md:createslideshow" class="tsd-anchor"></a><h3><a href="#md:createslideshow">createSlideshow</a></h3><p>▸ <strong>createSlideshow</strong>(<code>images</code>, <code>audio?</code>, <code>options?</code>): <code>Promise</code>&lt;<code>Partial</code>&lt;<a href="https://0x464e.github.io/slideshow-video/interfaces/SlideshowResponse"><code>SlideshowResponse</code></a>&gt;&gt;</p>
 <p>Brains of the operation, entrypoint to this whole package.</p>
@@ -205,6 +249,149 @@ Available fields in the response object depend on what was specified in <a href=
 By default, only a buffer of the resulting slideshow video is returned.</p>
 <!-- createSlideshow end -->
 
+<a id="md:examples" class="tsd-anchor"></a><h2><a href="#md:examples">Examples</a></h2><p>You can find examples about the usage of this library in the <a href="https://github.com/0x464e/slideshow-video/tree/master/examples">examples</a> folder.<br>If you use this for something and want it to be shown here an example, I&#39;d be glad to add it!  </p>
+<a id="md:optimization-amp-system-requirements" class="tsd-anchor"></a><h2><a href="#md:optimization-amp-system-requirements">Optimization &amp; System Requirements</a></h2><p>Video encoding is a very CPU/memory intensive task. FFmpeg will suck back as much memory as it needs to complete 
+its task. If memory runs out, FFmpeg probably gets killed by the OS. However, it&#39;s possible to use very little memory.</p>
+<p>To optimize memory usage, consider the following:</p>
+<ul>
+<li>Never run parallel slideshow creations</li>
+<li>Don&#39;t use an unnecessarily high resolution</li>
+<li>Transitions will use a lot of memory compared to not using them</li>
+<li>Use &#39;libx264&#39; or some other easy to encode codec</li>
+<li>Use a fast x264 preset (if using x264)</li>
+</ul>
+<p>Example memory usages 26 images with 1284x1350 resolution, no image looping, audio loops once, ran on my local machine WSL2:</p>
+<ul>
+<li>Transitions enabled, no resolution scaling, default x264 preset (medium)<ul>
+<li>3.8 GB memory usage</li>
+</ul>
+</li>
+<li>Transitions enabled, no resolution scaling, ultrafast x264 preset<ul>
+<li>3.24 GB memory usage</li>
+</ul>
+</li>
+<li>Transition enabled, scaled to 500px height, ultrafast x264 preset<ul>
+<li>568 MB memory usage</li>
+</ul>
+</li>
+<li>Transitions disabled, no resolution scaling, ultrafast x264 preset<ul>
+<li>420 MB memory usage</li>
+</ul>
+</li>
+<li>Transitions disabled, scaled to 500px height, ultrafast x264 preset<ul>
+<li>283 MB memory usage</li>
+</ul>
+</li>
+</ul>
+<a id="md:support-amp-requests" class="tsd-anchor"></a><h2><a href="#md:support-amp-requests">Support &amp; Requests</a></h2><p>Please report any issues you find on the <a href="https://github.com/0x464e/slideshow-video/issues">issues page</a>.<br>You can also join the <a href="https://discord.gg/SQCzaVeBTa">discord server</a> I just created to ask questions or request features or whatever.</p>
+<a id="md:comparison-with-videoshow" class="tsd-anchor"></a><h2><a href="#md:comparison-with-videoshow">Comparison with videoshow</a></h2><p><a href="https://www.npmjs.com/package/videoshow">videoshow</a> is another npm package that generate slideshow videos.<br>It&#39;s very old, unmaintained, and didn&#39;t have some of the features I wanted, so I made this package.</p>
+<p>Let&#39;s compare the two packages:<br><sup><sub>Yes, I&#39;m obviously biased, but all the points are factual as far as I know</sup></sub></p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th align="center">slideshow-video</th>
+<th align="center">videoshow</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Currently maintained</td>
+<td align="center">✅</td>
+<td align="center">❌</td>
+<td></td>
+</tr>
+<tr>
+<td>Usable fully automatically</td>
+<td align="center">✅</td>
+<td align="center">❌</td>
+<td>videoshow can&#39;t function if you don&#39;t control what<br>will be passed into it (unless you get lucky)</td>
+</tr>
+<tr>
+<td>Included cross-platform FFmpeg</td>
+<td align="center">✅</td>
+<td align="center">❌</td>
+<td>with videoshow, you have to install and configure ffmpeg manually</td>
+</tr>
+<tr>
+<td>Promise support</td>
+<td align="center">✅</td>
+<td align="center">❌</td>
+<td></td>
+</tr>
+<tr>
+<td>TypeScript support</td>
+<td align="center">✅</td>
+<td align="center">❌</td>
+<td></td>
+</tr>
+<tr>
+<td>Buffer support</td>
+<td align="center">✅</td>
+<td align="center">❌</td>
+<td></td>
+</tr>
+<tr>
+<td>Transitions</td>
+<td align="center">✅</td>
+<td align="center">🟡</td>
+<td>Only one transition available vs 50 in slideshow-video</td>
+</tr>
+<tr>
+<td>Per image config</td>
+<td align="center">✅</td>
+<td align="center">✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Support mixed image dimensions</td>
+<td align="center">✅</td>
+<td align="center">❌</td>
+<td>In videoshow, all input images must have same the dimensions</td>
+</tr>
+<tr>
+<td>Image/audio looping</td>
+<td align="center">✅</td>
+<td align="center">❌</td>
+<td></td>
+</tr>
+<tr>
+<td>Configurable FFmpeg options</td>
+<td align="center">✅</td>
+<td align="center">✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Output to buffer</td>
+<td align="center">✅</td>
+<td align="center">❌</td>
+<td></td>
+</tr>
+<tr>
+<td>CLI interface</td>
+<td align="center">❌</td>
+<td align="center">✅</td>
+<td>Planned feature for slideshow-video</td>
+</tr>
+<tr>
+<td>Logo support</td>
+<td align="center">❌</td>
+<td align="center">✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Subtitles support</td>
+<td align="center">❌</td>
+<td align="center">✅</td>
+<td></td>
+</tr>
+<tr>
+<td>Custom FFmpeg filters support</td>
+<td align="center">❌</td>
+<td align="center">✅</td>
+<td></td>
+</tr>
+</tbody></table>
 <!-- MARKDOWN LINKS & IMAGES -->
 </div></div>
 <div class="col-sidebar">
@@ -228,19 +415,28 @@ By default, only a buffer of the resulting slideshow video is returned.</p>
 <ul>
 <li>
 <ul>
-<li><a href="#md:about-the-project"><span>About <wbr/>The <wbr/>Project</span></a></li>
+<li><a href="#md:table-of-contents"><span>Table of <wbr/>Contents</span></a></li>
 <li>
 <ul>
+<li><a href="#md:about-the-project"><span>About <wbr/>The <wbr/>Project</span></a></li>
 <li><a href="#md:installation-amp-usage"><span>Installation &amp; <wbr/>Usage</span></a></li>
 <li>
 <ul>
 <li><a href="#md:basic-example-with-all-default-settings"><span>Basic example with all default settings</span></a></li>
-<li><a href="#md:advanced-example-with-options"><span>Advanced example with options</span></a></li>
+<li><a href="#md:advanced-example-with-options"><span>Advanced example with options</span></a></li></ul></li>
+<li><a href="#md:features"><span>Features</span></a></li>
+<li><a href="#md:documentation"><span>Documentation</span></a></li>
+<li>
+<ul>
 <li><a href="#md:createslideshow"><span>create<wbr/>Slideshow</span></a></li>
 <li>
 <ul>
 <li><a href="#md:parameters"><span>Parameters</span></a></li>
-<li><a href="#md:returns"><span>Returns</span></a></li></ul></li></ul></li></ul></li></ul></li></ul></div></details></div>
+<li><a href="#md:returns"><span>Returns</span></a></li></ul></li></ul></li>
+<li><a href="#md:examples"><span>Examples</span></a></li>
+<li><a href="#md:optimization-amp-system-requirements"><span>Optimization &amp; <wbr/>System <wbr/>Requirements</span></a></li>
+<li><a href="#md:support-amp-requests"><span>Support &amp; <wbr/>Requests</span></a></li>
+<li><a href="#md:comparison-with-videoshow"><span>Comparison with videoshow</span></a></li></ul></li></ul></li></ul></div></details></div>
 <div class="site-menu">
 <nav class="tsd-navigation"><a href="modules.html" class="current"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-4"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-namespace)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6"></rect><path d="M9.33 16V7.24H10.77L13.446 14.74C13.43 14.54 13.41 14.296 13.386 14.008C13.37 13.712 13.354 13.404 13.338 13.084C13.33 12.756 13.326 12.448 13.326 12.16V7.24H14.37V16H12.93L10.266 8.5C10.282 8.692 10.298 8.936 10.314 9.232C10.33 9.52 10.342 9.828 10.35 10.156C10.366 10.476 10.374 10.784 10.374 11.08V16H9.33Z" fill="var(--color-text)"></path></g></svg><span>slideshow-<wbr/>video -<wbr/> v0.0.0-<wbr/>automatic</span></a>
 <ul class="tsd-small-nested-navigation">
@@ -262,7 +458,7 @@ By default, only a buffer of the resulting slideshow video is returned.</p>
 <p style="line-height: 28px;">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a><br>
             <span id="generation-date"></span>
             <script>
-                window.GENERATION_DATE = 1689719737535;
+                window.GENERATION_DATE = 1689792356759;
 
                 (() => {
                     
