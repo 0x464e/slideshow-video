@@ -6,7 +6,7 @@
   "sort": [
     "source-order"
   ],
-  "includeVersion": false,
+  "includeVersion": true,
   "darkHighlightTheme": "dark-plus",
   "navigationLinks": {
     "GitHub": "https://github.com/0x464e/slideshow-video",

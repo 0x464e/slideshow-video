@@ -27,9 +27,12 @@
     "prepare": "tsc",
     "typedoc-md": "typedoc --options typedoc-md.json",
     "typedoc-md-to-readme": "npm run typedoc-md && node typedoc-md-to-readme.js && shx rm -rf docs-md",
-    "readme-toc": "markdown-toc -i README.md"
+    "readme-toc": "markdown-toc -i README.md",
+    "update-readme": "npm run typedoc-md-to-readme && npm run readme-toc"
   },
   "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
     "@tsconfig/node20": "^1.0.2",
     "@types/fluent-ffmpeg": "^2.1.21",
     "@types/lodash": "^4.14.195",
@@ -41,7 +44,6 @@
     "eslint": "^8.44.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "husky": "^8.0.0",
     "markdown-toc": "^1.2.0",
     "prettier": "^3.0.0",
     "semantic-release": "^21.0.7",

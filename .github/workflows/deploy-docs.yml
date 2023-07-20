@@ -1,25 +1,40 @@
 name: Deploy Documentation
-on: [push, pull_request]
-permissions:
-  contents: write
+
+on:
+  push:
+    branches:
+      - master
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+
+      - name: Check commit
+        run: |
+          COMMIT_MESSAGE=$(git log --format=%B -n 1 $GITHUB_SHA)
+          if [[ ! $COMMIT_MESSAGE =~ ^Docs: || $COMMIT_MESSAGE =~ README ]]; then
+            echo "Not a docs commit, or an update to README, skipping deploy"
+            echo "SKIP_DEPLOY=true" >> $GITHUB_ENV
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node
+        if: env.SKIP_DEPLOY != 'true'
         uses: actions/setup-node@v3
 
       - name: npm ci
-        if: steps.node-cache.outputs.cache-hit != 'true'
+        if: env.SKIP_DEPLOY != 'true'
         run: npm ci
 
       - name: Run Typedoc
+        if: env.SKIP_DEPLOY != 'true'
         run: npx typedoc && cp assets/docs-readme docs/README.md
 
       - name: Deploy 🚀
+        if: env.SKIP_DEPLOY != 'true'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: docs

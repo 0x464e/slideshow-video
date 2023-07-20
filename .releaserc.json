@@ -21,6 +21,18 @@
         "tarballDir": "tarballs"
       }
     ],
+    "@semantic-release/changelog",
+    [
+      "@semantic-release/git",
+      {
+        "assets": [
+          "README.md",
+          "CHANGELOG.md",
+          "package.json"
+        ],
+        "message": "Release: ${nextRelease.version.replace(/\\[([^\\]]+)\\]\\([^)]+\\)/g, (match, linkText) => linkText)}\n\n${nextRelease.notes.replace(/\\[([^\\]]+)\\]\\([^)]+\\)/g, (match, linkText) => linkText)}"
+      }
+    ],
     [
       "@semantic-release/github",
       {
