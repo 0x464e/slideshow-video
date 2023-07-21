@@ -28,9 +28,11 @@ jobs:
         run: npx semantic-release
 
       - name: Generate docs
+        if: env.PUBLISH_DOCS == 'true'
         run: npx typedoc && cp assets/docs-readme docs/README.md
 
       - name: Publish docs
+        if: env.PUBLISH_DOCS == 'true'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: docs

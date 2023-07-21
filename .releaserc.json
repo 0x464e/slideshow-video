@@ -16,6 +16,12 @@
       }
     ],
     [
+      "@semantic-release/exec",
+      {
+        "publishCmd": "echo 'PUBLISH_DOCS=true' >> $GITHUB_ENV"
+      }
+    ],
+    [
       "@semantic-release/npm",
       {
         "tarballDir": "tarballs"
