@@ -18,7 +18,7 @@
     [
       "@semantic-release/exec",
       {
-        "publishCmd": "echo 'PUBLISH_DOCS=true' >> $GITHUB_ENV"
+        "publishCmd": "echo 'DEPLOY_DOCS=true' >> $GITHUB_ENV"
       }
     ],
     [

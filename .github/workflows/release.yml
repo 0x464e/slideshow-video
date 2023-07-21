@@ -9,8 +9,27 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Import GPG key
+        run: echo "${{ secrets.GPG_KEY }}" | base64 --decode | gpg --batch --import
+
+      - name: Create GPG signing script
+        run: |
+          rm -rf /tmp/gpg.sh
+          echo '#!/bin/bash' >> /tmp/gpg.sh
+          echo 'gpg --batch --pinentry-mode=loopback --passphrase "${{ secrets.GPG_KEY_PASSPHRASE }}" $@' >> /tmp/gpg.sh
+          chmod +x /tmp/gpg.sh
+
+      - name: Setup git for signing
+        run: |
+          git config commit.gpgsign true
+          git config user.signingkey ${{ secrets.GPG_KEY_ID }}
+          git config gpg.program /tmp/gpg.sh
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
 
       - run: npm ci
 
@@ -27,12 +46,12 @@ jobs:
           GIT_COMMITTER_EMAIL: ${{ secrets.GIT_COMMITTER_EMAIL }}
         run: npx semantic-release
 
-      - name: Generate docs
-        if: env.PUBLISH_DOCS == 'true'
+      - name: Generate Docs
+        if: env.DEPLOY_DOCS == 'true'
         run: npx typedoc && cp assets/docs-readme docs/README.md
 
-      - name: Publish docs
-        if: env.PUBLISH_DOCS == 'true'
+      - name: Deploy Docs
+        if: env.DEPLOY_DOCS == 'true'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: docs
