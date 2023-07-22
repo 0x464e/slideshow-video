@@ -1,4 +1,4 @@
-<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>createSlideshow | slideshow-video - v0.0.0-automatic</title><meta name="description" content="Documentation site for npm package slideshow-video, a tool for automatically creating slideshow videos from images. Powered by NodeJS and FFmpeg."/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><link rel="stylesheet" href="../assets/custom.css"/><script defer src="../assets/main.js"></script><script async src="../assets/search.js" id="tsd-search-script"></script><link rel="icon" href="../slideshow-video-icon.svg" />
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>createSlideshow | slideshow-video - v1.0.2</title><meta name="description" content="Documentation site for npm package slideshow-video, a tool for automatically creating slideshow videos from images. Powered by NodeJS and FFmpeg."/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><link rel="stylesheet" href="../assets/custom.css"/><script defer src="../assets/main.js"></script><script async src="../assets/search.js" id="tsd-search-script"></script><link rel="icon" href="../slideshow-video-icon.svg" />
 </head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
 <div class="tsd-toolbar-contents container">
 <div class="table-cell" id="tsd-search" data-base="..">
@@ -7,7 +7,7 @@
 <div id="tsd-toolbar-links"><a href="https://github.com/0x464e/slideshow-video">GitHub</a><a href="https://www.npmjs.com/package/slideshow-video">npm</a></div></div>
 <ul class="results">
 <li class="state loading">Preparing search index...</li>
-<li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">slideshow-video - v0.0.0-automatic</a></div>
+<li class="state failure">The search index is not available</li></ul><a href="../index.html" class="title">slideshow-video - v1.0.2</a></div>
 <div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="7" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="11" width="14" height="2" fill="var(--color-text)"></rect></svg></a></div></div></header>
 <div class="container container-main">
 <div class="col-content">
@@ -27,7 +27,7 @@ Per image options override options specified in the 3rd parameter.<br>
 For example:</p>
 <pre><code class="language-ts"><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">images</span><span class="hl-1">: </span><span class="hl-9">InputImage</span><span class="hl-1">[] = [</span><br/><span class="hl-1">    {</span><br/><span class="hl-1">        </span><span class="hl-4">buffer:</span><span class="hl-1"> </span><span class="hl-4">Buffer</span><span class="hl-1">.</span><span class="hl-0">from</span><span class="hl-1">(</span><span class="hl-4">myImage</span><span class="hl-1">),</span><br/><span class="hl-1">        </span><span class="hl-4">duration:</span><span class="hl-1"> </span><span class="hl-8">5000</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    {</span><br/><span class="hl-1">        </span><span class="hl-4">filePath:</span><span class="hl-1"> </span><span class="hl-2">&#39;image2.jpg&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">transition:</span><span class="hl-1"> </span><span class="hl-2">&#39;dissolve&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-4">transitionDuration:</span><span class="hl-1"> </span><span class="hl-8">200</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    {</span><br/><span class="hl-1">        </span><span class="hl-4">filePath:</span><span class="hl-1"> </span><span class="hl-2">&#39;../../../documents/image3.png&#39;</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">];</span><br/><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">options</span><span class="hl-1">: </span><span class="hl-9">SlideshowOptions</span><span class="hl-1"> = {</span><br/><span class="hl-1">    </span><span class="hl-4">imageOptions:</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-4">imageDuration:</span><span class="hl-1"> </span><span class="hl-8">3500</span><br/><span class="hl-1">    },</span><br/><span class="hl-1">    </span><span class="hl-4">transitionOptions:</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-4">transitionDuration:</span><span class="hl-1"> </span><span class="hl-8">500</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">};</span><br/><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">response</span><span class="hl-1"> = </span><span class="hl-3">await</span><span class="hl-1"> </span><span class="hl-0">createSlideshow</span><span class="hl-1">(</span><span class="hl-4">images</span><span class="hl-1">, </span><span class="hl-2">&#39;./music/audio.mp3&#39;</span><span class="hl-1">, </span><span class="hl-4">options</span><span class="hl-1">);</span>
 </code><button>Copy</button></pre>
-<p>The tree input images broken down:</p>
+<p>The three input images broken down:</p>
 <p>First image, buffer input, overrides duration</p>
 <ul>
 <li>Has a duration of 5000ms</li>
@@ -128,14 +128,14 @@ is at its default value <code>&quot;all&quot;</code>.</p>
 a loop to occur. We only have 9.2 sec of audio left, and full loop of images will take 12.05
 sec, so no loop will be created? No, actually a loop will be created due to our end of input
 threshold being 3.5 sec. This means we are allowed 9.2 + 3.5 = 12.7 secs for a new loop.</p>
-<p>Ok, new lets say our end of input threshold is set to <code>2000</code> (1 sec) instead. Now we only have
+<p>Ok, new lets say our end of input threshold is set to <code>2000</code> (2 sec) instead. Now we only have
 9.2 + 2 = 11.2 secs for a new loop. And a full loop of images will take 12.05 sec, so no loop
 will be created.</p>
 <p>But let&#39;s also change our image loop threshold from <code>&quot;all&quot;</code> to <code>1</code>. This means that only one
 image needs to fit inside a loop for a loop to occur. And our first image is 3.5 sec long,
 so a loop will be created.<br>
-After the first image has looped, we have 11.2 - (3.5 + 0.25) = 7.45 secs left. The second image
-is 4 sec long, so it will also be inserted into the loop. Now we have 7.45 - (4 + 0.5) = 2.95 secs
+After the first image has been added to the loop looped, we have 11.2 - (3.5 + 0.25) = 7.45 secs left.
+The second image is 4 sec long, so it will also be inserted into the loop. Now we have 7.45 - (4 + 0.5) = 2.95 secs
 left. Inserting the third image would require 3.75 secs, so it will not be inserted into the
 second loop and the second loop, and whole slideshow, ends.</p>
 <p>Now lets say we have a last image extra duration of 3 sec. This means that the last image of a
@@ -146,19 +146,19 @@ so the second loop would only contain one image.</p>
 <pre><code class="language-sh"><span class="hl-0">npx</span><span class="hl-1"> </span><span class="hl-2">ts-node</span><span class="hl-1"> </span><span class="hl-2">examples/duration-looping.ts</span>
 </code><button>Copy</button></pre>
 <p><strong>Audio Looping</strong></p>
-<p>Audio looping works in a similar way to image looping, but is a bit simpler. And of course,
+<p>Audio looping works in a similar way to image looping, but it&#39;s a bit simpler. And of course,
 the logic is inverted in the sense that we are checking how much video duration time we have left
 for a new loop of the audio track. The end of input threshold is also considered, just as it
 was for image looping.</p>
 <p>For audio looping, <a href="../interfaces/LoopingOptions.html#audioLoopThreshold" class="tsd-kind-property">LoopingOptions.audioLoopThreshold</a>,
-which default to <code>0</code>, exists. It specifies the amount of milliseconds that need to fit inside a
-loop an audio loop to occur. Alternatively it can be set to <code>&quot;all&quot;</code>, which means that the
+which defaults to <code>0</code>, exists. It specifies the amount of milliseconds that need to fit inside a
+loop for an audio loop to occur. Alternatively it can be set to <code>&quot;all&quot;</code>, which means that the
 whole audio track needs to fit into a loop for a loop to occur.</p>
 
 <h4>See</h4><p><a href="../interfaces/SlideshowOptions.html" class="tsd-kind-interface">SlideshowOptions</a> for more information about the options object<br><a href="../interfaces/InputImage.html" class="tsd-kind-interface">InputImage</a> for more information about per image options</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/0x464e/slideshow-video/blob/0420f45/src/slideshow.ts#L158">slideshow.ts:158</a></li></ul></aside></li></ul></section></div>
+<li>Defined in <a href="https://github.com/0x464e/slideshow-video/blob/c033056/src/slideshow.ts#L158">slideshow.ts:158</a></li></ul></aside></li></ul></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -175,7 +175,7 @@ whole audio track needs to fit into a loop for a loop to occur.</p>
 <div class="tsd-theme-toggle">
 <h4 class="uppercase">Theme</h4><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div></div>
 <div class="site-menu">
-<nav class="tsd-navigation"><a href="../modules.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-4"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-namespace)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6"></rect><path d="M9.33 16V7.24H10.77L13.446 14.74C13.43 14.54 13.41 14.296 13.386 14.008C13.37 13.712 13.354 13.404 13.338 13.084C13.33 12.756 13.326 12.448 13.326 12.16V7.24H14.37V16H12.93L10.266 8.5C10.282 8.692 10.298 8.936 10.314 9.232C10.33 9.52 10.342 9.828 10.35 10.156C10.366 10.476 10.374 10.784 10.374 11.08V16H9.33Z" fill="var(--color-text)"></path></g></svg><span>slideshow-<wbr/>video -<wbr/> v0.0.0-<wbr/>automatic</span></a>
+<nav class="tsd-navigation"><a href="../modules.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-4"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-namespace)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6"></rect><path d="M9.33 16V7.24H10.77L13.446 14.74C13.43 14.54 13.41 14.296 13.386 14.008C13.37 13.712 13.354 13.404 13.338 13.084C13.33 12.756 13.326 12.448 13.326 12.16V7.24H14.37V16H12.93L10.266 8.5C10.282 8.692 10.298 8.936 10.314 9.232C10.33 9.52 10.342 9.828 10.35 10.156C10.366 10.476 10.374 10.784 10.374 11.08V16H9.33Z" fill="var(--color-text)"></path></g></svg><span>slideshow-<wbr/>video -<wbr/> v1.0.2</span></a>
 <ul class="tsd-small-nested-navigation">
 <li><a href="createSlideshow.html" class="current"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-64"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-function)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6"></rect><path d="M9.39 16V7.24H14.55V8.224H10.446V11.128H14.238V12.112H10.47V16H9.39Z" fill="var(--color-text)"></path></g></svg><span>create<wbr/>Slideshow</span></a></li>
 <li><a href="../interfaces/ImageResizeDimensions.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-256"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-interface)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6"></rect><path d="M9.51 16V15.016H11.298V8.224H9.51V7.24H14.19V8.224H12.402V15.016H14.19V16H9.51Z" fill="var(--color-text)"></path></g></svg><span>Image<wbr/>Resize<wbr/>Dimensions</span></a></li>
@@ -195,7 +195,7 @@ whole audio track needs to fit into a loop for a loop to occur.</p>
 <p style="line-height: 28px;">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a><br>
             <span id="generation-date"></span>
             <script>
-                window.GENERATION_DATE = 1689876437093;
+                window.GENERATION_DATE = 1690054282953;
 
                 (() => {
                     
