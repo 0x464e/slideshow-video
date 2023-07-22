@@ -1,6 +1,6 @@
 {
   "name": "slideshow-video",
-  "version": "0.0.0-automatic",
+  "version": "1.0.2",
   "description": "NodeJS and FFmpeg powered automated creation of video slideshows from input images. Fully automatic, no manual editing required.",
   "keywords": [
     "slideshow",
