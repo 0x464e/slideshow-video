@@ -44,7 +44,7 @@ import { Ffmpeg } from './ffmpeg';
  * const response = await createSlideshow(images, './music/audio.mp3', options);
  * ```
  *
- * The tree input images broken down:
+ * The three input images broken down:
  *
  * First image, buffer input, overrides duration
  * - Has a duration of 5000ms
@@ -106,15 +106,15 @@ import { Ffmpeg } from './ffmpeg';
  * sec, so no loop will be created? No, actually a loop will be created due to our end of input
  * threshold being 3.5 sec. This means we are allowed 9.2 + 3.5 = 12.7 secs for a new loop.
  *
- * Ok, new lets say our end of input threshold is set to `2000` (1 sec) instead. Now we only have
+ * Ok, new lets say our end of input threshold is set to `2000` (2 sec) instead. Now we only have
  * 9.2 + 2 = 11.2 secs for a new loop. And a full loop of images will take 12.05 sec, so no loop
  * will be created.
  *
  * But let's also change our image loop threshold from `"all"` to `1`. This means that only one
  * image needs to fit inside a loop for a loop to occur. And our first image is 3.5 sec long,
  * so a loop will be created.<br>
- * After the first image has looped, we have 11.2 - (3.5 + 0.25) = 7.45 secs left. The second image
- * is 4 sec long, so it will also be inserted into the loop. Now we have 7.45 - (4 + 0.5) = 2.95 secs
+ * After the first image has been added to the loop looped, we have 11.2 - (3.5 + 0.25) = 7.45 secs left.
+ * The second image is 4 sec long, so it will also be inserted into the loop. Now we have 7.45 - (4 + 0.5) = 2.95 secs
  * left. Inserting the third image would require 3.75 secs, so it will not be inserted into the
  * second loop and the second loop, and whole slideshow, ends.
  *
@@ -131,14 +131,14 @@ import { Ffmpeg } from './ffmpeg';
  *
  * **Audio Looping**
  *
- * Audio looping works in a similar way to image looping, but is a bit simpler. And of course,
+ * Audio looping works in a similar way to image looping, but it's a bit simpler. And of course,
  * the logic is inverted in the sense that we are checking how much video duration time we have left
  * for a new loop of the audio track. The end of input threshold is also considered, just as it
  * was for image looping.
  *
  * For audio looping, {@link LoopingOptions.audioLoopThreshold | LoopingOptions.audioLoopThreshold},
- * which default to `0`, exists. It specifies the amount of milliseconds that need to fit inside a
- * loop an audio loop to occur. Alternatively it can be set to `"all"`, which means that the
+ * which defaults to `0`, exists. It specifies the amount of milliseconds that need to fit inside a
+ * loop for an audio loop to occur. Alternatively it can be set to `"all"`, which means that the
  * whole audio track needs to fit into a loop for a loop to occur.
  *
  *

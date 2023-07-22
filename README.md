@@ -334,7 +334,7 @@ To optimize memory usage, consider the following:
 - Use 'libx264' or some other easy to encode codec
 - Use a fast x264 preset (if using x264)
 
-Example memory usages 26 images with 1284x1350 resolution, no image looping, audio loops once, ran on my local machine WSL2:
+Example memory usages with 26 images at 1284x1350 resolution, no image looping, audio loops once, ran on my local machine WSL2:
 - Transitions enabled, no resolution scaling, default x264 preset (medium)
   - 3.8 GB memory usage
 - Transitions enabled, no resolution scaling, ultrafast x264 preset
